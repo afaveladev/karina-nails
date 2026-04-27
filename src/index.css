@@ -39,41 +39,35 @@ h1, h2, h3, .title-font {
 }
 
 /* Scrollbar personalizada */
-::-webkit-scrollbar {
-  width: 6px;
-}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #1A1A1E; }
+::-webkit-scrollbar-thumb { background: var(--turquesa); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--dorado); }
 
-::-webkit-scrollbar-track {
-  background: #1A1A1E;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--turquesa);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--dorado);
-}
-
-/* Animación de fondo suave para Hero */
+/* Animaciones */
 @keyframes softWave {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
-/* Hero con fondo animado sutil */
+@keyframes floatGlow {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  50% { transform: translate(30px, 20px) scale(1.1); opacity: 0.8; }
+}
+
+@keyframes subtleGlow {
+  0%, 100% { box-shadow: 0 0 0 rgba(46, 196, 182, 0); }
+  50% { box-shadow: 0 0 8px rgba(46, 196, 182, 0.4); }
+}
+
+/* Hero */
 #hero {
   position: relative;
   background: radial-gradient(circle at 10% 20%, rgba(46, 196, 182, 0.08) 0%, rgba(15, 15, 16, 1) 70%);
   animation: softWave 8s ease-in-out infinite;
 }
 
-/* Botones modernos */
+/* Botones */
 .btn-primary {
   background: linear-gradient(135deg, var(--turquesa) 0%, var(--turquesa-oscuro) 100%);
   color: var(--blanco-calido);
@@ -104,20 +98,10 @@ h1, h2, h3, .title-font {
   z-index: -1;
 }
 
-.btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(46, 196, 182, 0.4);
-}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(46, 196, 182, 0.4); }
+.btn-primary:hover::before { left: 100%; }
+.btn-primary:active { transform: translateY(1px); }
 
-.btn-primary:hover::before {
-  left: 100%;
-}
-
-.btn-primary:active {
-  transform: translateY(1px);
-}
-
-/* Efecto Glow sutil para botones secundarios */
 .btn-secondary {
   background: transparent;
   color: var(--turquesa);
@@ -130,27 +114,22 @@ h1, h2, h3, .title-font {
   transition: var(--transicion);
 }
 
-.btn-secondary:hover {
-  background: var(--turquesa);
-  color: var(--blanco-calido);
-  transform: translateY(-2px);
-  box-shadow: 0 0 12px rgba(46, 196, 182, 0.3);
-}
+.btn-secondary:hover { background: var(--turquesa); color: var(--blanco-calido); transform: translateY(-2px); box-shadow: 0 0 12px rgba(46, 196, 182, 0.3); }
 
-/* Contenedor principal */
+.glow-effect { animation: subtleGlow 2s ease-in-out infinite; }
+
+/* Contenedor principal - Responsive */
 .container {
+  width: 100%;
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
 /* Secciones */
-section {
-  padding: 100px 0;
-  position: relative;
-}
+section { padding: 100px 0; position: relative; }
 
-/* Divisores dorados sutiles */
+/* Divisor dorado */
 .section-divider {
   width: 60px;
   height: 2px;
@@ -159,12 +138,11 @@ section {
   border-radius: 2px;
 }
 
-/* Títulos elegantes */
+/* Títulos */
 h2 {
   font-size: clamp(2rem, 5vw, 3.2rem);
   text-align: center;
   margin-bottom: 16px;
-  position: relative;
   background: linear-gradient(135deg, var(--blanco-calido) 0%, var(--gris-claro) 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -184,7 +162,7 @@ h2 {
   letter-spacing: 0.3px;
 }
 
-/* Cards de servicios - Versión premium */
+/* Cards de servicios */
 .service-card {
   background: rgba(26, 26, 30, 0.6);
   backdrop-filter: blur(10px);
@@ -208,32 +186,14 @@ h2 {
   transition: left 0.5s;
 }
 
-.service-card:hover {
-  transform: translateY(-10px) scale(1.02);
-  border-color: rgba(46, 196, 182, 0.3);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(46, 196, 182, 0.1);
-}
+.service-card:hover { transform: translateY(-10px) scale(1.02); border-color: rgba(46, 196, 182, 0.3); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(46, 196, 182, 0.1); }
+.service-card:hover::before { left: 0; }
+.service-card .icon { color: var(--turquesa); transition: var(--transicion); }
+.service-card:hover .icon { color: var(--dorado); transform: scale(1.05); }
 
-.service-card:hover::before {
-  left: 0;
-}
+.detail-gold { color: var(--dorado); }
 
-.service-card .icon {
-  color: var(--turquesa);
-  transition: var(--transicion);
-}
-
-.service-card:hover .icon {
-  color: var(--dorado);
-  transform: scale(1.05);
-}
-
-/* Detalle dorado en íconos */
-.detail-gold {
-  color: var(--dorado);
-}
-
-/* Línea divisoria dorada */
+/* Divisor dorado */
 .gold-divider {
   width: 100%;
   height: 1px;
@@ -241,30 +201,20 @@ h2 {
   margin: 30px 0;
 }
 
-/* Efecto de aparición al hacer scroll */
+/* Animación fade-up */
 .fade-up {
   opacity: 0;
   transform: translateY(40px);
   transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
 }
 
-.fade-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
 
 /* Enlaces */
-a {
-  color: var(--turquesa);
-  text-decoration: none;
-  transition: var(--transicion);
-}
+a { color: var(--turquesa); text-decoration: none; transition: var(--transicion); }
+a:hover { color: var(--dorado); }
 
-a:hover {
-  color: var(--dorado);
-}
-
-/* Inputs y selects premium */
+/* Inputs */
 input, select, textarea {
   background-color: #1A1A1E;
   border: 1px solid #2a2a2e;
@@ -276,13 +226,8 @@ input, select, textarea {
   transition: var(--transicion);
 }
 
-input:focus, select:focus, textarea:focus {
-  outline: none;
-  border-color: var(--turquesa);
-  box-shadow: 0 0 0 3px rgba(46, 196, 182, 0.1);
-}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--turquesa); box-shadow: 0 0 0 3px rgba(46, 196, 182, 0.1); }
 
-/* Labels con toque dorado */
 label {
   color: var(--gris-claro);
   font-weight: 500;
@@ -292,115 +237,160 @@ label {
   display: block;
 }
 
-/* Estilo de galería - Transiciones suaves */
+/* Galería */
 .gallery-item {
   overflow: hidden;
   border-radius: 20px;
   transition: var(--transicion);
 }
 
-.gallery-item img {
-  transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-}
+.gallery-item img { transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+.gallery-item:hover img { transform: scale(1.08); }
+.gallery-item:hover { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); }
 
-.gallery-item:hover img {
-  transform: scale(1.08);
-}
-
-.gallery-item:hover {
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-}
-
-/* Ajustes responsivos */
-@media (max-width: 992px) {
-  section {
-    padding: 70px 0;
-  }
-  
-  .container {
-    padding: 0 20px;
-  }
-}
-
-@media (max-width: 768px) {
-  section {
-    padding: 50px 0;
-  }
-  
-  .btn-primary, .btn-secondary {
-    padding: 10px 24px;
-    font-size: 0.85rem;
-  }
-  
-  .service-card {
-    padding: 24px 16px;
-  }
-  
-  .subtitle {
-    font-size: 0.9rem;
-    margin-bottom: 40px;
-  }
-  
-  .gold-divider {
-    margin: 20px 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: 0 16px;
-  }
-  
-  .btn-primary, .btn-secondary {
-    padding: 8px 20px;
-    font-size: 0.8rem;
-  }
-}
-
-/* Animación de glow para botones específicos */
-.glow-effect {
-  animation: subtleGlow 2s ease-in-out infinite;
-}
-
-@keyframes subtleGlow {
-  0%, 100% {
-    box-shadow: 0 0 0 rgba(46, 196, 182, 0);
-  }
-  50% {
-    box-shadow: 0 0 8px rgba(46, 196, 182, 0.4);
-  }
-}
-
-/* Botón de WhatsApp flotante premium */
-.whatsapp-btn {
-  background: linear-gradient(135deg, #25D366, #128C7E);
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: var(--transicion);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-}
-
-.whatsapp-btn:hover {
-  transform: scale(1.1) rotate(8deg);
-  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
-}
-
-/* Detalle dorado en bordes de secciones premium */
-.premium-border {
-  border-bottom: 1px solid rgba(201, 169, 110, 0.2);
-}
-
-/* Navbar - efecto vidrio */
+/* Navbar efectos */
 .navbar-glass {
   background: rgba(15, 15, 16, 0.8);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(46, 196, 182, 0.2);
+}
+
+.premium-border { border-bottom: 1px solid rgba(201, 169, 110, 0.2); }
+
+.magic-indicator { transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1); animation: subtleGlow 2s ease-in-out infinite; }
+
+/* ============================================ */
+/* RESPONSIVE MEJORADO - 100% como FAVELA BARBER */
+/* ============================================ */
+
+/* Tablet (992px - 768px) */
+@media (max-width: 992px) {
+  section { padding: 70px 0; }
+  .container { padding: 0 20px; }
+  .service-card { padding: 28px 20px; }
+  .subtitle { margin-bottom: 50px; font-size: 0.95rem; }
+  h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); }
+  .btn-primary, .btn-secondary { padding: 12px 28px; font-size: 0.9rem; }
+}
+
+/* Móvil grande (768px - 480px) */
+@media (max-width: 768px) {
+  section { padding: 60px 0; }
+  .container { padding: 0 16px; }
+  
+  .btn-primary, .btn-secondary { padding: 10px 24px; font-size: 0.85rem; }
+  .service-card { padding: 24px 16px; margin: 0 10px; }
+  .subtitle { font-size: 0.9rem; margin-bottom: 40px; padding: 0 10px; }
+  .gold-divider { margin: 20px 0; }
+  
+  .section-divider { width: 50px; margin: 15px auto 0; }
+  
+  /* Features grid */
+  .features-grid { gap: 15px !important; }
+  .feature-card { padding: 16px 12px !important; }
+  
+  /* CTA grid */
+  .stat-card { padding: 25px 15px !important; }
+  .stat-card .number { font-size: clamp(1.5rem, 6vw, 2rem) !important; }
+  
+  /* Contacto */
+  .contact-card { padding: 20px !important; }
+  .section-title { font-size: 1.2rem !important; text-align: center; }
+  iframe { height: 220px !important; }
+  
+  /* Info texto */
+  .info { font-size: 0.85rem !important; }
+  .info p { margin-bottom: 8px; }
+  
+  /* Inputs */
+  input, select, textarea { padding: 12px 14px !important; font-size: 0.9rem !important; }
+  
+  /* Gallery */
+  .gallery-item { border-radius: 16px !important; }
+  .nav-btn { width: 45px !important; height: 45px !important; }
+  .nav-btn svg { width: 25px !important; height: 25px !important; }
+  .close-btn svg { width: 25px !important; height: 25px !important; }
+  .lightbox-title { font-size: 1rem !important; }
+  
+  /* Opiniones */
+  .testimonial-card { padding: 30px 25px !important; }
+  .avatar { width: 70px !important; height: 70px !important; }
+  .customer-name { font-size: 1rem !important; }
+  .comment { font-size: 0.9rem !important; }
+  .nav-button { width: 45px !important; height: 45px !important; font-size: 1.2rem !important; }
+  
+  /* Footer */
+  footer .grid { gap: 35px !important; }
+  .logo-text { font-size: 1.2rem !important; }
+  .logo-image { width: 40px !important; height: 40px !important; }
+  .whatsapp-float { width: 50px !important; height: 50px !important; bottom: 20px; right: 20px; }
+  .whatsapp-float svg { width: 26px !important; height: 26px !important; }
+}
+
+/* Móvil pequeño (480px y menos) */
+@media (max-width: 480px) {
+  section { padding: 50px 0; }
+  .container { padding: 0 12px; }
+  
+  .btn-primary, .btn-secondary { padding: 8px 20px; font-size: 0.8rem; }
+  h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom: 12px; }
+  .subtitle { font-size: 0.85rem; margin-bottom: 30px; }
+  
+  .service-card { padding: 20px 12px; }
+  .service-name { font-size: 1.2rem !important; }
+  .price { font-size: 1.2rem !important; }
+  .duration { font-size: 0.75rem !important; }
+  .service-icon svg { width: 40px !important; height: 40px !important; }
+  
+  .section-divider { width: 40px; }
+  .gold-divider { margin: 15px 0; }
+  
+  .feature-card { padding: 12px 10px !important; }
+  .feature-icon svg { width: 30px !important; height: 30px !important; }
+  .feature-title { font-size: 0.85rem !important; }
+  .feature-description { font-size: 0.7rem !important; }
+  
+  .stat-card { padding: 20px 12px !important; }
+  .stat-card .number { font-size: clamp(1.3rem, 5vw, 1.8rem) !important; }
+  .stat-card .label { font-size: 0.85rem !important; }
+  .stat-card .description { font-size: 0.7rem !important; }
+  .stat-card .icon svg { width: 35px !important; height: 35px !important; }
+  
+  .contact-card { padding: 16px !important; }
+  .section-title { font-size: 1.1rem !important; }
+  input, select { padding: 10px 12px !important; font-size: 0.85rem !important; }
+  label { font-size: 0.75rem !important; }
+  iframe { height: 180px !important; }
+  .info { font-size: 0.75rem !important; }
+  .info svg { width: 14px !important; height: 14px !important; }
+  
+  .gallery-item { border-radius: 12px !important; }
+  .overlay-text { font-size: 0.8rem !important; padding: 8px !important; }
+  
+  .testimonial-card { padding: 20px !important; }
+  .avatar { width: 60px !important; height: 60px !important; border-width: 2px !important; }
+  .comment { font-size: 0.85rem !important; }
+  .stars svg { width: 16px !important; height: 16px !important; }
+  .dots { gap: 8px !important; margin-top: 25px !important; }
+  .dot { width: 8px !important; height: 8px !important; }
+  
+  footer .grid { gap: 30px !important; margin-bottom: 30px !important; }
+  .logo-text { font-size: 1rem !important; }
+  .logo-image { width: 35px !important; height: 35px !important; }
+  footer .title { font-size: 1rem !important; }
+  footer li, footer .contact-info li, footer .schedule li { font-size: 0.75rem !important; }
+  .social-icon { width: 32px !important; height: 32px !important; }
+  .social-icon svg { width: 16px !important; height: 16px !important; }
+  .bottom { font-size: 0.7rem !important; }
+  .developer { font-size: 0.65rem !important; }
+  .whatsapp-float { width: 45px !important; height: 45px !important; bottom: 16px; right: 16px; }
+  .whatsapp-float svg { width: 22px !important; height: 22px !important; }
+}
+
+/* Ajustes para pantallas muy pequeñas (375px) */
+@media (max-width: 375px) {
+  .service-name { font-size: 1rem !important; }
+  .price { font-size: 1rem !important; }
+  .btn-primary, .btn-secondary { padding: 6px 16px; font-size: 0.75rem; }
+  .subtitle { font-size: 0.8rem; }
 }

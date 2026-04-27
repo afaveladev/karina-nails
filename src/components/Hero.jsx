@@ -36,7 +36,6 @@ const Hero = () => {
 
   return (
     <section id="hero" style={styles.hero}>
-      {/* Fondo decorativo sutil */}
       <div style={styles.bgDecoration}>
         <div style={styles.glowOrb1}></div>
         <div style={styles.glowOrb2}></div>
@@ -44,7 +43,7 @@ const Hero = () => {
       
       <div style={styles.container}>
         <div ref={iconRef} style={styles.icon}>
-          <GiLipstick size={90} color="#2EC4B6" />
+          <GiLipstick size={window.innerWidth <= 480 ? 60 : window.innerWidth <= 768 ? 70 : 90} color="#2EC4B6" />
         </div>
         <h1 ref={titleRef} style={styles.title}>
           KARINA'S <span style={styles.titleAccent}>NAILS & LASHES</span>
@@ -73,7 +72,8 @@ const styles = {
     background: 'radial-gradient(circle at 10% 20%, rgba(46, 196, 182, 0.08) 0%, #0F0F10 70%)',
     textAlign: 'center',
     position: 'relative',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    padding: '80px 20px'
   },
   bgDecoration: {
     position: 'absolute',
@@ -88,8 +88,8 @@ const styles = {
     position: 'absolute',
     top: '-20%',
     right: '-10%',
-    width: '500px',
-    height: '500px',
+    width: 'min(500px, 80vw)',
+    height: 'min(500px, 80vw)',
     borderRadius: '50%',
     background: 'radial-gradient(circle, rgba(46, 196, 182, 0.15) 0%, transparent 70%)',
     animation: 'floatGlow 12s ease-in-out infinite'
@@ -98,8 +98,8 @@ const styles = {
     position: 'absolute',
     bottom: '-20%',
     left: '-10%',
-    width: '400px',
-    height: '400px',
+    width: 'min(400px, 70vw)',
+    height: 'min(400px, 70vw)',
     borderRadius: '50%',
     background: 'radial-gradient(circle, rgba(201, 169, 110, 0.1) 0%, transparent 70%)',
     animation: 'floatGlow 15s ease-in-out infinite reverse'
@@ -107,40 +107,47 @@ const styles = {
   container: {
     padding: '20px',
     position: 'relative',
-    zIndex: 1
+    zIndex: 1,
+    width: '100%',
+    maxWidth: '1200px',
+    margin: '0 auto'
   },
   icon: {
     marginBottom: '30px',
     filter: 'drop-shadow(0 0 15px rgba(46, 196, 182, 0.3))'
   },
   title: {
-    fontSize: 'clamp(2rem, 8vw, 4.5rem)',
+    fontSize: 'clamp(1.8rem, 8vw, 4.5rem)',
     fontFamily: 'Playfair Display, serif',
-    letterSpacing: '3px',
+    letterSpacing: 'clamp(1px, 2vw, 3px)',
     color: '#F5F5F5',
-    marginBottom: '20px'
+    marginBottom: '20px',
+    lineHeight: '1.2',
+    wordWrap: 'break-word'
   },
   titleAccent: {
     background: 'linear-gradient(135deg, #2EC4B6 0%, #C9A96E 100%)',
     WebkitBackgroundClip: 'text',
     backgroundClip: 'text',
-    color: 'transparent'
+    color: 'transparent',
+    display: 'inline-block'
   },
   goldLine: {
-    width: '80px',
+    width: 'min(80px, 15vw)',
     height: '2px',
     background: 'linear-gradient(90deg, #2EC4B6, #C9A96E, transparent)',
     margin: '20px auto',
     borderRadius: '2px'
   },
   subtitle: {
-    fontSize: 'clamp(1rem, 4vw, 1.3rem)',
+    fontSize: 'clamp(0.9rem, 4vw, 1.3rem)',
     color: '#A0A0A0',
     marginTop: '10px',
     marginBottom: '35px',
     fontFamily: 'Poppins, sans-serif',
     fontWeight: 300,
-    letterSpacing: '1px'
+    letterSpacing: '1px',
+    padding: '0 10px'
   }
 }
 
@@ -158,12 +165,15 @@ animationStyles.textContent = `
     }
   }
   
-  @keyframes subtlePulse {
-    0%, 100% {
-      opacity: 0.6;
+  @media (max-width: 768px) {
+    #hero {
+      padding: 60px 16px;
     }
-    50% {
-      opacity: 1;
+  }
+  
+  @media (max-width: 480px) {
+    #hero {
+      padding: 40px 12px;
     }
   }
 `
