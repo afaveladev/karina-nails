@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, h3, .title-font {
+  font-family: 'Playfair Display', serif;
+}
+
+:root {
+  --turquesa: #14B8A6;
+  --turquesa-oscuro: #0D9488;
+  --menta: #5EEAD4;
+  --negro: #000000;
+  --gris: #9CA3AF;
+  --blanco: #FFFFFF;
+}
+
+.btn-primary {
+  background-color: var(--turquesa);
+  color: var(--blanco);
+  border: none;
+  padding: 12px 24px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--menta);
+  transform: scale(1.05);
+}
+
+a, .accent {
+  color: var(--turquesa);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--menta);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+section {
+  padding: 80px 0;
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 50px 0;
+  }
+  
+  .btn-primary {
+    padding: 10px 20px;
+  }
+}
+
+/* Navbar hover effects */
+li:hover {
+  color: #14B8A6 !important;
+  transition: color 0.3s ease;
+}
+
+/* Ocultar menú desktop en móvil */
+@media (max-width: 768px) {
+  ul[style*="desktopMenu"] {
+    display: none !important;
+  }
+  
+  div[style*="mobileIcon"] {
+    display: block !important;
+  }
+}
+
+button:hover {
+  background-color: #5EEAD4 !important;
+  transform: scale(1.02);
+}
