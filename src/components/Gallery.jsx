@@ -79,6 +79,7 @@ const Gallery = () => {
     <section id="gallery" style={styles.gallery}>
       <div className="container" style={styles.container}>
         <h2 style={styles.title}>Nuestra <span style={styles.accent}>Galería</span></h2>
+        <div className="section-divider"></div>
         <p style={styles.subtitle}>Mira nuestros trabajos</p>
 
         <div ref={scrollContainerRef} style={styles.scrollContainer}>
@@ -86,7 +87,7 @@ const Gallery = () => {
             {images.map((image, index) => (
               <div
                 key={image.id}
-                style={styles.galleryItem}
+                className="gallery-item"
                 onClick={() => openLightbox(index)}
               >
                 <img src={image.url} alt={image.title} style={styles.image} />
@@ -103,13 +104,13 @@ const Gallery = () => {
       {selectedImage && (
         <div style={styles.lightbox} onClick={closeLightbox}>
           <button style={styles.closeBtn} onClick={closeLightbox}>
-            <FaTimes size={30} color="white" />
+            <FaTimes size={30} color="#C9A96E" />
           </button>
           <button style={{ ...styles.navBtn, left: '20px' }} onClick={(e) => { e.stopPropagation(); prevImage(); }}>
-            <FaChevronLeft size={40} color="white" />
+            <FaChevronLeft size={40} color="#2EC4B6" />
           </button>
           <button style={{ ...styles.navBtn, right: '20px' }} onClick={(e) => { e.stopPropagation(); nextImage(); }}>
-            <FaChevronRight size={40} color="white" />
+            <FaChevronRight size={40} color="#2EC4B6" />
           </button>
           <div style={styles.lightboxContent} onClick={(e) => e.stopPropagation()}>
             <img src={selectedImage.url} alt={selectedImage.title} style={styles.lightboxImage} />
@@ -123,68 +124,69 @@ const Gallery = () => {
 
 const styles = {
   gallery: {
-    padding: '80px 0',
-    backgroundColor: '#0a0a0a'
+    padding: '100px 0',
+    backgroundColor: '#0F0F10'
   },
   container: {
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: '0 20px'
+    padding: '0 24px'
   },
   title: {
     textAlign: 'center',
-    fontSize: 'clamp(2rem, 5vw, 3rem)',
+    fontSize: 'clamp(2rem, 5vw, 3.2rem)',
     fontFamily: 'Playfair Display, serif',
     marginBottom: '10px',
-    color: 'white'
+    color: '#F5F5F5'
   },
   accent: {
-    color: '#14B8A6'
+    background: 'linear-gradient(135deg, #2EC4B6 0%, #C9A96E 100%)',
+    WebkitBackgroundClip: 'text',
+    backgroundClip: 'text',
+    color: 'transparent'
   },
   subtitle: {
     textAlign: 'center',
-    color: '#9CA3AF',
-    marginBottom: '50px',
-    fontSize: '1.1rem'
+    color: '#A0A0A0',
+    marginBottom: '60px',
+    fontSize: '1rem',
+    fontWeight: 300,
+    letterSpacing: '0.5px'
   },
   scrollContainer: {
     overflowX: 'auto',
     scrollBehavior: 'smooth',
-    cursor: 'grab'
+    cursor: 'grab',
+    borderRadius: '20px'
   },
   galleryGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(12, minmax(280px, 1fr))',
-    gap: '20px',
+    gridTemplateColumns: 'repeat(12, minmax(300px, 1fr))',
+    gap: '24px',
     padding: '10px'
-  },
-  galleryItem: {
-    position: 'relative',
-    borderRadius: '10px',
-    overflow: 'hidden',
-    cursor: 'pointer',
-    aspectRatio: '4/3'
   },
   image: {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
-    transition: 'transform 0.3s ease'
+    transition: 'transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1)'
   },
   overlay: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: 'rgba(0,0,0,0.8)',
-    padding: '10px',
+    background: 'linear-gradient(135deg, rgba(46, 196, 182, 0.9), rgba(201, 169, 110, 0.9))',
+    padding: '15px',
     transform: 'translateY(100%)',
-    transition: 'transform 0.3s ease'
+    transition: 'transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1)'
   },
   overlayText: {
-    color: '#14B8A6',
+    color: '#F5F5F5',
     textAlign: 'center',
-    fontSize: '0.9rem'
+    fontSize: '1rem',
+    fontWeight: 500,
+    letterSpacing: '0.5px'
   },
   lightbox: {
     position: 'fixed',
@@ -192,7 +194,7 @@ const styles = {
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0,0,0,0.95)',
+    backgroundColor: 'rgba(15, 15, 16, 0.98)',
     zIndex: 2000,
     display: 'flex',
     alignItems: 'center',
@@ -206,13 +208,14 @@ const styles = {
     background: 'none',
     border: 'none',
     cursor: 'pointer',
-    zIndex: 2001
+    zIndex: 2001,
+    transition: 'all 0.3s ease'
   },
   navBtn: {
     position: 'absolute',
     top: '50%',
     transform: 'translateY(-50%)',
-    background: 'rgba(0,0,0,0.5)',
+    background: 'rgba(46, 196, 182, 0.2)',
     border: 'none',
     borderRadius: '50%',
     width: '60px',
@@ -221,7 +224,9 @@ const styles = {
     zIndex: 2001,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    transition: 'all 0.3s ease',
+    backdropFilter: 'blur(10px)'
   },
   lightboxContent: {
     maxWidth: '90%',
@@ -231,26 +236,48 @@ const styles = {
   lightboxImage: {
     maxWidth: '100%',
     maxHeight: '80vh',
-    borderRadius: '10px'
+    borderRadius: '20px',
+    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4)'
   },
   lightboxTitle: {
-    color: '#14B8A6',
+    color: '#C9A96E',
     marginTop: '20px',
-    fontSize: '1.2rem'
+    fontSize: '1.2rem',
+    fontFamily: 'Playfair Display, serif',
+    letterSpacing: '1px'
   }
 }
 
 // Hover effects
 const hoverStyles = document.createElement('style')
 hoverStyles.textContent = `
-  #gallery .gallery-item:hover img {
-    transform: scale(1.1);
+  .gallery-item {
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    cursor: pointer;
   }
-  #gallery .gallery-item:hover .overlay {
+  
+  .gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(46, 196, 182, 0.2);
+  }
+  
+  .gallery-item:hover img {
+    transform: scale(1.08);
+  }
+  
+  .gallery-item:hover .overlay {
     transform: translateY(0);
   }
-  #gallery .nav-btn:hover {
-    background-color: #14B8A6;
+  
+  .nav-btn:hover {
+    background-color: #2EC4B6 !important;
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  .close-btn:hover {
+    transform: rotate(90deg);
   }
 `
 document.head.appendChild(hoverStyles)

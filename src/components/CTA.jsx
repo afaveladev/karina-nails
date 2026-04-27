@@ -51,39 +51,40 @@ const CTA = () => {
     <section ref={sectionRef} style={styles.cta}>
       <div className="container" style={styles.container}>
         <h2 style={styles.title}>Nuestras <span style={styles.accent}>Estadísticas</span></h2>
+        <div className="section-divider"></div>
         <p style={styles.subtitle}>Números que hablan por sí solos</p>
 
         <div style={styles.grid}>
-          <div style={styles.card}>
+          <div className="stat-card" style={styles.card}>
             <div style={styles.icon}>
-              <FaStar size={50} color="#14B8A6" />
+              <FaStar size={50} color="#C9A96E" />
             </div>
             <div style={styles.number}>{counts.stars}.9 ★</div>
             <div style={styles.label}>Calificación promedio</div>
             <div style={styles.description}>⭐ Basado en 500+ reseñas</div>
           </div>
 
-          <div style={styles.card}>
+          <div className="stat-card" style={styles.card}>
             <div style={styles.icon}>
-              <FaSmile size={50} color="#14B8A6" />
+              <FaSmile size={50} color="#2EC4B6" />
             </div>
             <div style={styles.number}>+{counts.clients}</div>
             <div style={styles.label}>Clientas satisfechas</div>
             <div style={styles.description}>💅 En los últimos 12 meses</div>
           </div>
 
-          <div style={styles.card}>
+          <div className="stat-card" style={styles.card}>
             <div style={styles.icon}>
-              <FaHeart size={50} color="#14B8A6" />
+              <FaHeart size={50} color="#2EC4B6" />
             </div>
             <div style={styles.number}>{counts.satisfaction}%</div>
             <div style={styles.label}>Recomendación</div>
             <div style={styles.description}>✨ Clientes que vuelven</div>
           </div>
 
-          <div style={styles.card}>
+          <div className="stat-card" style={styles.card}>
             <div style={styles.icon}>
-              <FaClock size={50} color="#14B8A6" />
+              <FaClock size={50} color="#2EC4B6" />
             </div>
             <div style={styles.number}>+{counts.experience}</div>
             <div style={styles.label}>Años de experiencia</div>
@@ -93,7 +94,7 @@ const CTA = () => {
 
         <div style={styles.buttonContainer}>
           <button 
-            className="btn-primary" 
+            className="btn-primary glow-effect" 
             onClick={() => {
               const contactSection = document.getElementById('contact')
               if (contactSection) {
@@ -112,81 +113,109 @@ const CTA = () => {
 
 const styles = {
   cta: {
-    padding: '80px 0',
-    background: 'linear-gradient(135deg, #000000 0%, #0a0a0a 100%)',
-    borderTop: '1px solid #14B8A6',
-    borderBottom: '1px solid #14B8A6'
+    padding: '100px 0',
+    background: 'linear-gradient(135deg, #0F0F10 0%, #0a0a0a 100%)',
+    borderTop: '1px solid rgba(46, 196, 182, 0.3)',
+    borderBottom: '1px solid rgba(46, 196, 182, 0.3)',
+    position: 'relative'
   },
   container: {
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: '0 20px',
+    padding: '0 24px',
     textAlign: 'center'
   },
   title: {
-    fontSize: 'clamp(2rem, 5vw, 3rem)',
+    fontSize: 'clamp(2rem, 5vw, 3.2rem)',
     fontFamily: 'Playfair Display, serif',
     marginBottom: '10px',
-    color: 'white'
+    color: '#F5F5F5'
   },
   accent: {
-    color: '#14B8A6'
+    background: 'linear-gradient(135deg, #2EC4B6 0%, #C9A96E 100%)',
+    WebkitBackgroundClip: 'text',
+    backgroundClip: 'text',
+    color: 'transparent'
   },
   subtitle: {
     textAlign: 'center',
-    color: '#9CA3AF',
-    marginBottom: '50px',
-    fontSize: '1.1rem'
+    color: '#A0A0A0',
+    marginBottom: '60px',
+    fontSize: '1rem',
+    fontWeight: 300,
+    letterSpacing: '0.5px'
   },
   grid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
     gap: '30px',
-    marginBottom: '50px'
+    marginBottom: '60px'
   },
   card: {
-    backgroundColor: '#111',
-    padding: '30px',
-    borderRadius: '15px',
+    background: 'rgba(26, 26, 30, 0.6)',
+    backdropFilter: 'blur(10px)',
+    padding: '35px 20px',
+    borderRadius: '20px',
     textAlign: 'center',
-    transition: 'transform 0.3s ease',
-    border: '1px solid #222'
+    transition: 'all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1)',
+    border: '1px solid rgba(46, 196, 182, 0.1)'
   },
   icon: {
-    marginBottom: '20px'
+    marginBottom: '20px',
+    transition: 'all 0.3s ease'
   },
   number: {
     fontSize: 'clamp(2rem, 4vw, 3rem)',
     fontWeight: 'bold',
-    color: '#14B8A6',
+    background: 'linear-gradient(135deg, #2EC4B6 0%, #C9A96E 100%)',
+    WebkitBackgroundClip: 'text',
+    backgroundClip: 'text',
+    color: 'transparent',
     fontFamily: 'Playfair Display, serif',
     marginBottom: '10px'
   },
   label: {
-    fontSize: '1.1rem',
-    color: 'white',
-    marginBottom: '10px',
-    fontWeight: '500'
+    fontSize: '1rem',
+    color: '#F5F5F5',
+    marginBottom: '8px',
+    fontWeight: '500',
+    letterSpacing: '0.5px'
   },
   description: {
     fontSize: '0.8rem',
-    color: '#9CA3AF'
+    color: '#A0A0A0'
   },
   buttonContainer: {
     marginTop: '20px'
   },
   button: {
-    fontSize: '1.2rem',
-    padding: '15px 40px'
+    fontSize: '1.1rem',
+    padding: '14px 45px',
+    letterSpacing: '1px'
   }
 }
 
 // Hover effects
 const hoverStyles = document.createElement('style')
 hoverStyles.textContent = `
-  #cta .card:hover {
-    transform: translateY(-10px);
-    border-color: #14B8A6;
+  .stat-card:hover {
+    transform: translateY(-12px);
+    border-color: rgba(46, 196, 182, 0.4);
+    box-shadow: 0 20px 40px rgba(46, 196, 182, 0.15);
+  }
+  
+  .stat-card:hover .icon {
+    transform: scale(1.1);
+  }
+  
+  .stat-card:hover .icon svg {
+    filter: drop-shadow(0 0 8px rgba(46, 196, 182, 0.5));
+  }
+  
+  @media (max-width: 768px) {
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
   }
 `
 document.head.appendChild(hoverStyles)

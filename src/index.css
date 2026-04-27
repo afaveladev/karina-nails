@@ -6,59 +6,320 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: #0F0F10;
+  color: #E0E0E0;
   font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+  line-height: 1.6;
 }
 
 h1, h2, h3, .title-font {
   font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 :root {
-  --turquesa: #14B8A6;
-  --turquesa-oscuro: #0D9488;
-  --menta: #5EEAD4;
-  --negro: #000000;
-  --gris: #9CA3AF;
-  --blanco: #FFFFFF;
+  --negro-suave: #0F0F10;
+  --blanco-calido: #F5F5F5;
+  --turquesa: #2EC4B6;
+  --turquesa-oscuro: #20a094;
+  --turquesa-claro: #6ee7de;
+  --dorado: #C9A96E;
+  --dorado-oscuro: #b8923a;
+  --gris-claro: #E8E8E8;
+  --gris-medio: #A0A0A0;
+  --gris-oscuro: #1A1A1E;
+  --transicion: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
 }
 
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1A1A1E;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--turquesa);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dorado);
+}
+
+/* Animación de fondo suave para Hero */
+@keyframes softWave {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Hero con fondo animado sutil */
+#hero {
+  position: relative;
+  background: radial-gradient(circle at 10% 20%, rgba(46, 196, 182, 0.08) 0%, rgba(15, 15, 16, 1) 70%);
+  animation: softWave 8s ease-in-out infinite;
+}
+
+/* Botones modernos */
 .btn-primary {
-  background-color: var(--turquesa);
-  color: var(--blanco);
+  background: linear-gradient(135deg, var(--turquesa) 0%, var(--turquesa-oscuro) 100%);
+  color: var(--blanco-calido);
   border: none;
-  padding: 12px 24px;
+  padding: 14px 36px;
   font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  border-radius: 40px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transicion);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  box-shadow: 0 4px 15px rgba(46, 196, 182, 0.2);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
+  z-index: -1;
 }
 
 .btn-primary:hover {
-  background-color: var(--menta);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(46, 196, 182, 0.4);
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+/* Efecto Glow sutil para botones secundarios */
+.btn-secondary {
+  background: transparent;
+  color: var(--turquesa);
+  border: 1.5px solid var(--turquesa);
+  padding: 12px 32px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: var(--transicion);
+}
+
+.btn-secondary:hover {
+  background: var(--turquesa);
+  color: var(--blanco-calido);
+  transform: translateY(-2px);
+  box-shadow: 0 0 12px rgba(46, 196, 182, 0.3);
+}
+
+/* Contenedor principal */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Secciones */
+section {
+  padding: 100px 0;
+  position: relative;
+}
+
+/* Divisores dorados sutiles */
+.section-divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--turquesa), var(--dorado), transparent);
+  margin: 20px auto 0;
+  border-radius: 2px;
+}
+
+/* Títulos elegantes */
+h2 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  text-align: center;
+  margin-bottom: 16px;
+  position: relative;
+  background: linear-gradient(135deg, var(--blanco-calido) 0%, var(--gris-claro) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--gris-medio);
+  margin-bottom: 60px;
+  font-size: 1rem;
+  max-width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 300;
+  letter-spacing: 0.3px;
+}
+
+/* Cards de servicios - Versión premium */
+.service-card {
+  background: rgba(26, 26, 30, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: var(--transicion);
+  border: 1px solid rgba(46, 196, 182, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--turquesa), var(--dorado));
+  transition: left 0.5s;
+}
+
+.service-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: rgba(46, 196, 182, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(46, 196, 182, 0.1);
+}
+
+.service-card:hover::before {
+  left: 0;
+}
+
+.service-card .icon {
+  color: var(--turquesa);
+  transition: var(--transicion);
+}
+
+.service-card:hover .icon {
+  color: var(--dorado);
   transform: scale(1.05);
 }
 
-a, .accent {
+/* Detalle dorado en íconos */
+.detail-gold {
+  color: var(--dorado);
+}
+
+/* Línea divisoria dorada */
+.gold-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--dorado), var(--turquesa), transparent);
+  margin: 30px 0;
+}
+
+/* Efecto de aparición al hacer scroll */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Enlaces */
+a {
   color: var(--turquesa);
   text-decoration: none;
+  transition: var(--transicion);
 }
 
 a:hover {
-  color: var(--menta);
+  color: var(--dorado);
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+/* Inputs y selects premium */
+input, select, textarea {
+  background-color: #1A1A1E;
+  border: 1px solid #2a2a2e;
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: var(--blanco-calido);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  transition: var(--transicion);
 }
 
-section {
-  padding: 80px 0;
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--turquesa);
+  box-shadow: 0 0 0 3px rgba(46, 196, 182, 0.1);
+}
+
+/* Labels con toque dorado */
+label {
+  color: var(--gris-claro);
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Estilo de galería - Transiciones suaves */
+.gallery-item {
+  overflow: hidden;
+  border-radius: 20px;
+  transition: var(--transicion);
+}
+
+.gallery-item img {
+  transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.08);
+}
+
+.gallery-item:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+/* Ajustes responsivos */
+@media (max-width: 992px) {
+  section {
+    padding: 70px 0;
+  }
+  
+  .container {
+    padding: 0 20px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -66,29 +327,80 @@ section {
     padding: 50px 0;
   }
   
-  .btn-primary {
-    padding: 10px 20px;
-  }
-}
-
-/* Navbar hover effects */
-li:hover {
-  color: #14B8A6 !important;
-  transition: color 0.3s ease;
-}
-
-/* Ocultar menú desktop en móvil */
-@media (max-width: 768px) {
-  ul[style*="desktopMenu"] {
-    display: none !important;
+  .btn-primary, .btn-secondary {
+    padding: 10px 24px;
+    font-size: 0.85rem;
   }
   
-  div[style*="mobileIcon"] {
-    display: block !important;
+  .service-card {
+    padding: 24px 16px;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 40px;
+  }
+  
+  .gold-divider {
+    margin: 20px 0;
   }
 }
 
-button:hover {
-  background-color: #5EEAD4 !important;
-  transform: scale(1.02);
+@media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
+  }
+  
+  .btn-primary, .btn-secondary {
+    padding: 8px 20px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Animación de glow para botones específicos */
+.glow-effect {
+  animation: subtleGlow 2s ease-in-out infinite;
+}
+
+@keyframes subtleGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(46, 196, 182, 0);
+  }
+  50% {
+    box-shadow: 0 0 8px rgba(46, 196, 182, 0.4);
+  }
+}
+
+/* Botón de WhatsApp flotante premium */
+.whatsapp-btn {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transicion);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.whatsapp-btn:hover {
+  transform: scale(1.1) rotate(8deg);
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+}
+
+/* Detalle dorado en bordes de secciones premium */
+.premium-border {
+  border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+}
+
+/* Navbar - efecto vidrio */
+.navbar-glass {
+  background: rgba(15, 15, 16, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(46, 196, 182, 0.2);
 }

@@ -43,11 +43,11 @@ const Navbar = () => {
 
   return (
     <>
-      <nav style={{ ...styles.navbar, ...(scrolled ? styles.scrolled : {}) }}>
+      <nav className={`navbar-glass ${scrolled ? 'scrolled-nav' : ''}`} style={styles.navbar}>
         <div style={styles.container}>
           {/* Logo */}
           <div style={styles.logo} onClick={handleLogoClick}>
-            <GiLipstick size={40} color="#14B8A6" />
+            <GiLipstick size={40} color="#2EC4B6" />
             <span style={styles.logoText}>KARINA'S</span>
           </div>
 
@@ -56,8 +56,6 @@ const Navbar = () => {
             <li style={styles.menuItem} onClick={() => scrollToSection('hero')}>Inicio</li>
             <li style={styles.menuItem} onClick={() => scrollToSection('services')}>Servicios</li>
             <li style={styles.menuItem} onClick={() => scrollToSection('about')}>Nosotras</li>
-            <li style={styles.menuItem} onClick={() => scrollToSection('gallery')}>Galería</li>
-            <li style={styles.menuItem} onClick={() => scrollToSection('contact')}>Contacto</li>
             <li style={styles.menuItem} onClick={() => scrollToSection('opinions')}>Opiniones</li>
             <li style={styles.menuItem} onClick={() => scrollToSection('gallery')}>Galería</li>
             <li style={styles.menuItem} onClick={() => scrollToSection('contact')}>Contacto</li>
@@ -65,7 +63,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Icon */}
           <div style={styles.mobileIcon} onClick={toggleMenu}>
-            {isOpen ? <FaTimes size={28} color="#14B8A6" /> : <FaBars size={28} color="#14B8A6" />}
+            {isOpen ? <FaTimes size={28} color="#2EC4B6" /> : <FaBars size={28} color="#2EC4B6" />}
           </div>
         </div>
       </nav>
@@ -76,8 +74,6 @@ const Navbar = () => {
           <li style={styles.mobileMenuItem} onClick={() => scrollToSection('hero')}>Inicio</li>
           <li style={styles.mobileMenuItem} onClick={() => scrollToSection('services')}>Servicios</li>
           <li style={styles.mobileMenuItem} onClick={() => scrollToSection('about')}>Nosotras</li>
-          <li style={styles.mobileMenuItem} onClick={() => scrollToSection('gallery')}>Galería</li>
-          <li style={styles.mobileMenuItem} onClick={() => scrollToSection('contact')}>Contacto</li>
           <li style={styles.mobileMenuItem} onClick={() => scrollToSection('opinions')}>Opiniones</li>
           <li style={styles.mobileMenuItem} onClick={() => scrollToSection('gallery')}>Galería</li>
           <li style={styles.mobileMenuItem} onClick={() => scrollToSection('contact')}>Contacto</li>
@@ -93,20 +89,14 @@ const styles = {
     top: 0,
     left: 0,
     width: '100%',
-    backgroundColor: 'transparent',
     padding: '20px 0',
     zIndex: 1000,
-    transition: 'all 0.3s ease'
-  },
-  scrolled: {
-    backgroundColor: '#000000',
-    padding: '10px 0',
-    borderBottom: '1px solid #14B8A6'
+    transition: 'all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1)'
   },
   container: {
-    maxWidth: '1200px',
+    maxWidth: '1280px',
     margin: '0 auto',
-    padding: '0 20px',
+    padding: '0 24px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center'
@@ -115,13 +105,15 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     gap: '10px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    transition: 'all 0.3s ease'
   },
   logoText: {
     fontSize: '1.5rem',
     fontFamily: 'Playfair Display, serif',
-    color: 'white',
-    letterSpacing: '2px'
+    color: '#F5F5F5',
+    letterSpacing: '2px',
+    fontWeight: 600
   },
   desktopMenu: {
     display: 'flex',
@@ -129,26 +121,32 @@ const styles = {
     listStyle: 'none'
   },
   menuItem: {
-    color: 'white',
+    color: '#F5F5F5',
     cursor: 'pointer',
-    fontSize: '1rem',
+    fontSize: '0.9rem',
     fontFamily: 'Poppins, sans-serif',
-    transition: 'color 0.3s ease'
+    transition: 'all 0.3s ease',
+    fontWeight: 500,
+    letterSpacing: '0.5px',
+    position: 'relative'
   },
   mobileIcon: {
     display: 'none',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    transition: 'all 0.3s ease'
   },
   mobileMenu: {
     position: 'fixed',
     top: 0,
     right: '-100%',
     width: '70%',
+    maxWidth: '320px',
     height: '100vh',
-    backgroundColor: '#000000',
+    backgroundColor: '#0F0F10',
     zIndex: 999,
-    transition: 'right 0.3s ease',
-    borderLeft: '2px solid #14B8A6'
+    transition: 'right 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1)',
+    borderLeft: '2px solid #2EC4B6',
+    boxShadow: '-5px 0 30px rgba(0, 0, 0, 0.5)'
   },
   mobileMenuOpen: {
     right: 0
@@ -159,18 +157,20 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     height: '100%',
-    gap: '30px',
+    gap: '35px',
     listStyle: 'none'
   },
   mobileMenuItem: {
-    color: 'white',
-    fontSize: '1.5rem',
+    color: '#F5F5F5',
+    fontSize: '1.3rem',
     fontFamily: 'Playfair Display, serif',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    letterSpacing: '1px'
   }
 }
 
-// Media queries para responsive
+// Media queries y estilos adicionales
 const mediaStyles = document.createElement('style')
 mediaStyles.textContent = `
   @media (max-width: 768px) {
@@ -180,6 +180,49 @@ mediaStyles.textContent = `
     div[style*="mobileIcon"] {
       display: block !important;
     }
+  }
+  
+  /* Efecto vidrio para navbar */
+  .navbar-glass {
+    background: rgba(15, 15, 16, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(46, 196, 182, 0.2);
+  }
+  
+  /* Navbar cuando hace scroll */
+  .scrolled-nav {
+    padding: 12px 0 !important;
+    background: rgba(15, 15, 16, 0.95) !important;
+    border-bottom: 1px solid rgba(46, 196, 182, 0.3) !important;
+  }
+  
+  /* Hover efectos en menú */
+  li:hover {
+    color: #2EC4B6 !important;
+  }
+  
+  li::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #2EC4B6, #C9A96E);
+    transition: width 0.3s ease;
+  }
+  
+  li:hover::after {
+    width: 100%;
+  }
+  
+  /* Logo hover */
+  .logo:hover {
+    transform: scale(1.02);
+  }
+  
+  .logo:hover svg {
+    color: #C9A96E !important;
   }
 `
 document.head.appendChild(mediaStyles)

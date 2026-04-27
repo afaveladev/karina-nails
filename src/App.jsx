@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Services from './components/Services'
@@ -10,18 +11,44 @@ import Footer from './components/Footer'
 import './index.css'
 
 function App() {
+  // Efecto fade-up al hacer scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible')
+        }
+      })
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' })
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <>
       <Navbar />
       <section id="hero">
         <Hero />
       </section>
-      <Services />
-      <About />
-      <Opinions />
-      <Gallery />
-      <CTA />
-      <Contact />
+      <div className="fade-up">
+        <Services />
+      </div>
+      <div className="fade-up">
+        <About />
+      </div>
+      <div className="fade-up">
+        <Opinions />
+      </div>
+      <div className="fade-up">
+        <Gallery />
+      </div>
+      <div className="fade-up">
+        <CTA />
+      </div>
+      <div className="fade-up">
+        <Contact />
+      </div>
       <Footer />
     </>
   )

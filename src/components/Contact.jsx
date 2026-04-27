@@ -97,7 +97,6 @@ const Contact = () => {
       setSelectedDate('')
       setSelectedTime('')
       
-      // Limpiar mensaje después de 3 segundos
       setTimeout(() => setMessage(''), 3000)
     } catch (error) {
       console.error('Error saving appointment:', error)
@@ -132,32 +131,34 @@ const Contact = () => {
     <section id="contact" style={styles.contact}>
       <div className="container" style={styles.container}>
         <h2 style={styles.title}>Agenda tu <span style={styles.accent}>Cita</span></h2>
+        <div className="section-divider"></div>
         <p style={styles.subtitle}>Elige fecha y hora, nosotros te esperamos</p>
 
         <div style={styles.grid}>
           {/* Mapa */}
-          <div style={styles.mapContainer}>
+          <div className="contact-card" style={styles.mapContainer}>
             <h3 style={styles.sectionTitle}>📍 ¿Dónde estamos?</h3>
             <div style={styles.map}>
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3602.0!2d-103.5!3d25.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDMwJzAwLjAiTiAxMDPCsDMwJzAwLjAiVw!5e0!3m2!1ses!2smx!4v1234567890"
                 width="100%"
-                height="300"
-                style={{ border: 0, borderRadius: '10px' }}
+                height="280"
+                style={{ border: 0, borderRadius: '16px' }}
                 allowFullScreen=""
                 loading="lazy"
                 title="Ubicación Karina Nails"
               ></iframe>
             </div>
+            <div className="gold-divider" style={{ margin: '20px 0' }}></div>
             <div style={styles.info}>
-              <p><strong>📞 Teléfono:</strong> 871 535 3066</p>
-              <p><strong>📍 Dirección:</strong> Calle Tolosa 320, Col. Santa Sofía, Gómez Palacio, Durango</p>
-              <p><strong>⏰ Horario:</strong> Desde las 11:00 a.m.</p>
+              <p><span style={{ color: '#C9A96E' }}>📞</span> <strong>Teléfono:</strong> 871 535 3066</p>
+              <p><span style={{ color: '#2EC4B6' }}>📍</span> <strong>Dirección:</strong> Calle Tolosa 320, Col. Santa Sofía, Gómez Palacio, Durango</p>
+              <p><span style={{ color: '#C9A96E' }}>⏰</span> <strong>Horario:</strong> Desde las 11:00 a.m.</p>
             </div>
           </div>
 
           {/* Formulario */}
-          <div style={styles.formContainer}>
+          <div className="contact-card" style={styles.formContainer}>
             <h3 style={styles.sectionTitle}>📝 Reserva tu lugar</h3>
             <form onSubmit={handleSubmit} style={styles.form}>
               <div style={styles.formGroup}>
@@ -239,7 +240,7 @@ const Contact = () => {
                 </select>
               </div>
 
-              <button type="submit" className="btn-primary" disabled={loading}>
+              <button type="submit" className="btn-primary glow-effect" disabled={loading} style={styles.submitBtn}>
                 {loading ? 'Agendando...' : 'Agendar Cita'}
               </button>
               
@@ -254,29 +255,34 @@ const Contact = () => {
 
 const styles = {
   contact: {
-    padding: '80px 0',
-    backgroundColor: '#000000'
+    padding: '100px 0',
+    backgroundColor: '#0F0F10'
   },
   container: {
-    maxWidth: '1200px',
+    maxWidth: '1280px',
     margin: '0 auto',
-    padding: '0 20px'
+    padding: '0 24px'
   },
   title: {
     textAlign: 'center',
-    fontSize: 'clamp(2rem, 5vw, 3rem)',
+    fontSize: 'clamp(2rem, 5vw, 3.2rem)',
     fontFamily: 'Playfair Display, serif',
     marginBottom: '10px',
-    color: 'white'
+    color: '#F5F5F5'
   },
   accent: {
-    color: '#14B8A6'
+    background: 'linear-gradient(135deg, #2EC4B6 0%, #C9A96E 100%)',
+    WebkitBackgroundClip: 'text',
+    backgroundClip: 'text',
+    color: 'transparent'
   },
   subtitle: {
     textAlign: 'center',
-    color: '#9CA3AF',
-    marginBottom: '50px',
-    fontSize: '1.1rem'
+    color: '#A0A0A0',
+    marginBottom: '60px',
+    fontSize: '1rem',
+    fontWeight: 300,
+    letterSpacing: '0.5px'
   },
   grid: {
     display: 'grid',
@@ -284,28 +290,34 @@ const styles = {
     gap: '50px'
   },
   mapContainer: {
-    backgroundColor: '#111',
-    borderRadius: '15px',
-    padding: '20px'
+    background: 'rgba(26, 26, 30, 0.6)',
+    backdropFilter: 'blur(10px)',
+    borderRadius: '24px',
+    padding: '30px',
+    border: '1px solid rgba(46, 196, 182, 0.1)',
+    transition: 'all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1)'
   },
   formContainer: {
-    backgroundColor: '#111',
-    borderRadius: '15px',
-    padding: '20px'
+    background: 'rgba(26, 26, 30, 0.6)',
+    backdropFilter: 'blur(10px)',
+    borderRadius: '24px',
+    padding: '30px',
+    border: '1px solid rgba(46, 196, 182, 0.1)',
+    transition: 'all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1)'
   },
   sectionTitle: {
-    fontSize: '1.5rem',
+    fontSize: '1.4rem',
     fontFamily: 'Playfair Display, serif',
     marginBottom: '20px',
-    color: 'white'
+    color: '#F5F5F5'
   },
   map: {
     marginBottom: '20px',
-    borderRadius: '10px',
+    borderRadius: '16px',
     overflow: 'hidden'
   },
   info: {
-    color: '#9CA3AF',
+    color: '#A0A0A0',
     lineHeight: '1.8',
     fontSize: '0.9rem'
   },
@@ -320,52 +332,91 @@ const styles = {
     gap: '8px'
   },
   label: {
-    color: '#14B8A6',
-    fontWeight: '500'
+    color: '#C9A96E',
+    fontWeight: '500',
+    fontSize: '0.85rem',
+    letterSpacing: '0.5px'
   },
   input: {
-    backgroundColor: '#222',
-    border: '1px solid #333',
-    borderRadius: '8px',
-    padding: '12px',
-    color: 'white',
-    fontSize: '1rem'
+    backgroundColor: '#1A1A1E',
+    border: '1px solid #2a2a2e',
+    borderRadius: '12px',
+    padding: '14px 18px',
+    color: '#F5F5F5',
+    fontSize: '0.95rem',
+    transition: 'all 0.3s ease',
+    fontFamily: 'Poppins, sans-serif'
   },
   select: {
-    backgroundColor: '#222',
-    border: '1px solid #333',
-    borderRadius: '8px',
-    padding: '12px',
-    color: 'white',
-    fontSize: '1rem',
-    cursor: 'pointer'
+    backgroundColor: '#1A1A1E',
+    border: '1px solid #2a2a2e',
+    borderRadius: '12px',
+    padding: '14px 18px',
+    color: '#F5F5F5',
+    fontSize: '0.95rem',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    fontFamily: 'Poppins, sans-serif'
   },
   warning: {
-    color: '#F59E0B',
+    color: '#C9A96E',
     fontSize: '0.8rem',
     marginTop: '5px'
   },
   success: {
-    color: '#14B8A6',
+    color: '#2EC4B6',
     textAlign: 'center',
-    marginTop: '10px'
+    marginTop: '15px',
+    fontSize: '0.9rem'
   },
   error: {
     color: '#EF4444',
     textAlign: 'center',
-    marginTop: '10px'
+    marginTop: '15px',
+    fontSize: '0.9rem'
+  },
+  submitBtn: {
+    marginTop: '10px',
+    width: '100%'
   }
 }
 
-// Media query
-const mediaStyles = document.createElement('style')
-mediaStyles.textContent = `
+// Hover effects
+const hoverStyles = document.createElement('style')
+hoverStyles.textContent = `
+  .contact-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(46, 196, 182, 0.3);
+    box-shadow: 0 15px 35px rgba(46, 196, 182, 0.1);
+  }
+  
+  input:hover, select:hover {
+    border-color: #2EC4B6;
+  }
+  
+  input:focus, select:focus {
+    outline: none;
+    border-color: #2EC4B6;
+    box-shadow: 0 0 0 3px rgba(46, 196, 182, 0.1);
+  }
+  
+  @media (max-width: 992px) {
+    #contact .grid {
+      gap: 30px;
+    }
+  }
+  
   @media (max-width: 768px) {
     #contact .grid {
       grid-template-columns: 1fr !important;
+      gap: 30px;
+    }
+    
+    .contact-card {
+      padding: 25px !important;
     }
   }
 `
-document.head.appendChild(mediaStyles)
+document.head.appendChild(hoverStyles)
 
 export default Contact

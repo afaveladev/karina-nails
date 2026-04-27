@@ -25,14 +25,14 @@ const Opinions = () => {
     const hasHalfStar = rating % 1 !== 0
     
     for (let i = 0; i < fullStars; i++) {
-      stars.push(<FaStar key={i} color="#14B8A6" size={20} />)
+      stars.push(<FaStar key={i} color="#C9A96E" size={20} />)
     }
     if (hasHalfStar) {
-      stars.push(<FaStarHalfAlt key="half" color="#14B8A6" size={20} />)
+      stars.push(<FaStarHalfAlt key="half" color="#C9A96E" size={20} />)
     }
     const remainingStars = 5 - Math.ceil(rating)
     for (let i = 0; i < remainingStars; i++) {
-      stars.push(<FaRegStar key={`empty-${i}`} color="#14B8A6" size={20} />)
+      stars.push(<FaRegStar key={`empty-${i}`} color="#C9A96E" size={20} />)
     }
     return stars
   }
@@ -70,13 +70,14 @@ const Opinions = () => {
     <section id="opinions" style={styles.opinions}>
       <div className="container" style={styles.container}>
         <h2 style={styles.title}>Lo que dicen <span style={styles.accent}>nuestras clientas</span></h2>
+        <div className="section-divider"></div>
         <p style={styles.subtitle}>Más de 500 clientas satisfechas</p>
 
         <div style={styles.carouselContainer}>
           <button onClick={goToPrev} style={styles.navButton}>❮</button>
           
           <div style={styles.cardContainer}>
-            <div style={styles.card}>
+            <div className="testimonial-card" style={styles.card}>
               <img src={testimonials[currentIndex].avatar} alt={testimonials[currentIndex].name} style={styles.avatar} />
               <div style={styles.stars}>{renderStars(testimonials[currentIndex].rating)}</div>
               <p style={styles.comment}>"{testimonials[currentIndex].text}"</p>
@@ -94,7 +95,7 @@ const Opinions = () => {
               onClick={() => goToIndex(index)}
               style={{
                 ...styles.dot,
-                backgroundColor: index === currentIndex ? '#14B8A6' : '#333'
+                backgroundColor: index === currentIndex ? '#2EC4B6' : '#1A1A1E'
               }}
             />
           ))}
@@ -106,29 +107,34 @@ const Opinions = () => {
 
 const styles = {
   opinions: {
-    padding: '80px 0',
-    backgroundColor: '#000000'
+    padding: '100px 0',
+    backgroundColor: '#0F0F10'
   },
   container: {
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: '0 20px'
+    padding: '0 24px'
   },
   title: {
     textAlign: 'center',
-    fontSize: 'clamp(2rem, 5vw, 3rem)',
+    fontSize: 'clamp(2rem, 5vw, 3.2rem)',
     fontFamily: 'Playfair Display, serif',
     marginBottom: '10px',
-    color: 'white'
+    color: '#F5F5F5'
   },
   accent: {
-    color: '#14B8A6'
+    background: 'linear-gradient(135deg, #2EC4B6 0%, #C9A96E 100%)',
+    WebkitBackgroundClip: 'text',
+    backgroundClip: 'text',
+    color: 'transparent'
   },
   subtitle: {
     textAlign: 'center',
-    color: '#9CA3AF',
-    marginBottom: '50px',
-    fontSize: '1.1rem'
+    color: '#A0A0A0',
+    marginBottom: '60px',
+    fontSize: '1rem',
+    fontWeight: 300,
+    letterSpacing: '0.5px'
   },
   carouselContainer: {
     display: 'flex',
@@ -138,68 +144,99 @@ const styles = {
     flexWrap: 'wrap'
   },
   navButton: {
-    backgroundColor: '#14B8A6',
-    color: 'white',
+    background: 'linear-gradient(135deg, #2EC4B6 0%, #20a094 100%)',
+    color: '#F5F5F5',
     border: 'none',
     width: '50px',
     height: '50px',
     borderRadius: '50%',
     fontSize: '1.5rem',
     cursor: 'pointer',
-    transition: 'all 0.3s ease'
+    transition: 'all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1)',
+    boxShadow: '0 4px 15px rgba(46, 196, 182, 0.2)'
   },
   cardContainer: {
     flex: 1,
-    maxWidth: '500px',
-    minWidth: '280px'
+    maxWidth: '550px',
+    minWidth: '300px'
   },
   card: {
-    backgroundColor: '#111',
-    borderRadius: '20px',
-    padding: '40px',
+    background: 'rgba(26, 26, 30, 0.6)',
+    backdropFilter: 'blur(10px)',
+    borderRadius: '24px',
+    padding: '45px 35px',
     textAlign: 'center',
-    border: '1px solid #14B8A6'
+    border: '1px solid rgba(46, 196, 182, 0.2)',
+    transition: 'all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1)'
   },
   avatar: {
-    width: '80px',
-    height: '80px',
+    width: '85px',
+    height: '85px',
     borderRadius: '50%',
     objectFit: 'cover',
     marginBottom: '20px',
-    border: '3px solid #14B8A6'
+    border: '3px solid #C9A96E',
+    boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)'
   },
   stars: {
     marginBottom: '20px',
     display: 'flex',
     justifyContent: 'center',
-    gap: '5px'
+    gap: '6px'
   },
   comment: {
-    color: '#9CA3AF',
+    color: '#E0E0E0',
     fontSize: '1rem',
-    lineHeight: '1.6',
+    lineHeight: '1.7',
     marginBottom: '20px',
-    fontStyle: 'italic'
+    fontStyle: 'italic',
+    fontWeight: 300
   },
   customerName: {
-    color: 'white',
+    color: '#F5F5F5',
     fontSize: '1.2rem',
-    fontFamily: 'Playfair Display, serif'
+    fontFamily: 'Playfair Display, serif',
+    letterSpacing: '1px'
   },
   dots: {
     display: 'flex',
     justifyContent: 'center',
-    gap: '10px',
-    marginTop: '30px'
+    gap: '12px',
+    marginTop: '40px'
   },
   dot: {
-    width: '12px',
-    height: '12px',
+    width: '10px',
+    height: '10px',
     borderRadius: '50%',
     border: 'none',
     cursor: 'pointer',
     transition: 'all 0.3s ease'
   }
 }
+
+// Hover effects
+const hoverStyles = document.createElement('style')
+hoverStyles.textContent = `
+  .testimonial-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(46, 196, 182, 0.4);
+    box-shadow: 0 20px 40px rgba(46, 196, 182, 0.1);
+  }
+  
+  .nav-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(46, 196, 182, 0.4);
+  }
+  
+  .nav-btn:active {
+    transform: scale(0.95);
+  }
+  
+  .dot:hover {
+    transform: scale(1.2);
+    background-color: #2EC4B6 !important;
+  }
+`
+document.head.appendChild(hoverStyles)
 
 export default Opinions

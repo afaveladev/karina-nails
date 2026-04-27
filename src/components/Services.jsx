@@ -14,10 +14,10 @@ const Services = () => {
       
       card.addEventListener('mouseenter', () => {
         gsap.to(card, {
-          rotateY: 10,
-          rotateX: 5,
-          scale: 1.05,
-          duration: 0.3,
+          rotateY: 8,
+          rotateX: 4,
+          scale: 1.02,
+          duration: 0.4,
           ease: 'power2.out'
         })
       })
@@ -27,7 +27,7 @@ const Services = () => {
           rotateY: 0,
           rotateX: 0,
           scale: 1,
-          duration: 0.3,
+          duration: 0.4,
           ease: 'power2.out'
         })
       })
@@ -55,6 +55,7 @@ const Services = () => {
     <section id="services" style={styles.services}>
       <div className="container" style={styles.container}>
         <h2 style={styles.title}>Nuestros <span style={styles.accent}>Servicios</span></h2>
+        <div className="section-divider"></div>
         <p style={styles.subtitle}>Elige el servicio que más te guste</p>
         
         <div style={styles.grid}>
@@ -62,19 +63,20 @@ const Services = () => {
             <div
               key={service.id}
               ref={el => cardsRef.current[index] = el}
-              style={styles.card}
+              className="service-card"
               onClick={() => handleServiceClick(service)}
             >
               <div style={styles.iconWrapper}>
-                <div style={{ color: '#14B8A6' }}>{service.icon}</div>
+                <div className="service-icon" style={{ color: '#2EC4B6' }}>{service.icon}</div>
               </div>
               <h3 style={styles.serviceName}>{service.name}</h3>
               <p style={styles.description}>{service.description}</p>
+              <div className="gold-divider" style={{ margin: '15px 0' }}></div>
               <div style={styles.serviceFooter}>
                 <span style={styles.price}>{service.price}</span>
                 <span style={styles.duration}>{service.duration}</span>
               </div>
-              <button style={styles.button}>Agendar</button>
+              <button className="btn-primary" style={styles.button}>Agendar Cita</button>
             </div>
           ))}
         </div>
@@ -85,45 +87,40 @@ const Services = () => {
 
 const styles = {
   services: {
-    padding: '80px 0',
-    backgroundColor: '#000000',
+    padding: '100px 0',
+    backgroundColor: '#0F0F10',
     minHeight: '100vh'
   },
   container: {
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: '0 20px'
+    padding: '0 24px'
   },
   title: {
     textAlign: 'center',
-    fontSize: 'clamp(2rem, 5vw, 3rem)',
+    fontSize: 'clamp(2rem, 5vw, 3.2rem)',
     fontFamily: 'Playfair Display, serif',
     marginBottom: '10px',
-    color: 'white'
+    color: '#F5F5F5'
   },
   accent: {
-    color: '#14B8A6'
+    background: 'linear-gradient(135deg, #2EC4B6 0%, #C9A96E 100%)',
+    WebkitBackgroundClip: 'text',
+    backgroundClip: 'text',
+    color: 'transparent'
   },
   subtitle: {
     textAlign: 'center',
-    color: '#9CA3AF',
-    marginBottom: '50px',
-    fontSize: '1.1rem'
+    color: '#A0A0A0',
+    marginBottom: '60px',
+    fontSize: '1rem',
+    fontWeight: 300,
+    letterSpacing: '0.5px'
   },
   grid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
     gap: '30px'
-  },
-  card: {
-    backgroundColor: '#111111',
-    borderRadius: '15px',
-    padding: '30px',
-    textAlign: 'center',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    border: '1px solid #222',
-    transformStyle: 'preserve-3d'
   },
   iconWrapper: {
     marginBottom: '20px',
@@ -134,41 +131,38 @@ const styles = {
     fontSize: '1.5rem',
     fontFamily: 'Playfair Display, serif',
     marginBottom: '10px',
-    color: 'white'
+    color: '#F5F5F5'
   },
   description: {
-    color: '#9CA3AF',
+    color: '#A0A0A0',
     marginBottom: '20px',
     fontSize: '0.9rem'
   },
   serviceFooter: {
     display: 'flex',
     justifyContent: 'space-between',
-    marginBottom: '20px',
-    padding: '10px 0',
-    borderTop: '1px solid #222',
-    borderBottom: '1px solid #222'
+    alignItems: 'center',
+    marginBottom: '20px'
   },
   price: {
-    color: '#14B8A6',
-    fontSize: '1.3rem',
-    fontWeight: 'bold'
+    color: '#2EC4B6',
+    fontSize: '1.4rem',
+    fontWeight: 'bold',
+    fontFamily: 'Playfair Display, serif'
   },
   duration: {
-    color: '#9CA3AF',
-    fontSize: '0.9rem'
+    color: '#C9A96E',
+    fontSize: '0.85rem',
+    letterSpacing: '0.5px'
   },
   button: {
-    backgroundColor: '#14B8A6',
-    color: 'white',
-    border: 'none',
-    padding: '10px 20px',
-    borderRadius: '8px',
-    cursor: 'pointer',
-    fontFamily: 'Poppins, sans-serif',
-    fontWeight: '600',
     width: '100%',
-    transition: 'all 0.3s ease'
+    marginTop: '5px',
+    background: 'linear-gradient(135deg, #2EC4B6 0%, #20a094 100%)',
+    borderRadius: '40px',
+    padding: '12px',
+    fontWeight: 500,
+    letterSpacing: '1px'
   }
 }
 
