@@ -164,7 +164,7 @@ animationStyles.textContent = `
       opacity: 0.8;
     }
   }
-  
+    
   @media (max-width: 768px) {
     #hero {
       padding: 60px 16px;
