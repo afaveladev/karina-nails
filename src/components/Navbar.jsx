@@ -285,4 +285,4 @@ globalStyles.textContent = `
 `
 document.head.appendChild(globalStyles)
 
-export default Navbar
+export default Navbar 
