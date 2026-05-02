@@ -16,7 +16,7 @@ const About = () => {
   return (
     <section id="about" style={styles.about}>
       <div className="container" style={styles.container}>
-        <div style={styles.grid}>
+        <div className="about-grid" style={styles.grid}>
           {/* Columna Izquierda - Imagen */}
           <div style={styles.imageCol}>
             <div style={styles.imageWrapper}>
@@ -43,7 +43,7 @@ const About = () => {
             </p>
 
             {/* Features Grid */}
-            <div style={styles.featuresGrid}>
+            <div className="features-grid" style={styles.featuresGrid}>
               {features.map((feature, index) => (
                 <div key={index} className="feature-card" style={styles.featureCard}>
                   <div style={styles.featureIcon}>{feature.icon}</div>
@@ -111,7 +111,7 @@ const styles = {
     transition: 'all 0.4s ease'
   },
   imageText: {
-    fontSize: '2.2rem',
+    fontSize: 'clamp(1.5rem, 4vw, 2.2rem)',
     fontFamily: 'Playfair Display, serif',
     color: '#F5F5F5',
     marginTop: '20px',
@@ -119,7 +119,7 @@ const styles = {
   },
   imageSubtext: {
     color: '#C9A96E',
-    fontSize: '1rem',
+    fontSize: 'clamp(0.8rem, 2vw, 1rem)',
     letterSpacing: '1px',
     fontWeight: 300
   },
@@ -143,7 +143,7 @@ const styles = {
   description: {
     color: '#A0A0A0',
     lineHeight: '1.7',
-    fontSize: '1rem',
+    fontSize: 'clamp(0.85rem, 2vw, 1rem)',
     fontWeight: 300
   },
   featuresGrid: {
@@ -167,63 +167,53 @@ const styles = {
     transition: 'all 0.3s ease'
   },
   featureTitle: {
-    fontSize: '0.95rem',
+    fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
     fontFamily: 'Poppins, sans-serif',
     fontWeight: '600',
     marginBottom: '6px',
     color: '#F5F5F5'
   },
   featureDescription: {
-    fontSize: '0.75rem',
+    fontSize: 'clamp(0.7rem, 1.8vw, 0.75rem)',
     color: '#A0A0A0',
     lineHeight: '1.4'
   }
 }
 
-// Media query y hover effects
+// Media queries
 const mediaStyles = document.createElement('style')
 mediaStyles.textContent = `
   @media (max-width: 992px) {
-    #about .grid {
-      gap: 40px;
-    }
+    .about-grid { gap: 40px !important; }
+    .feature-card { padding: 16px 12px !important; }
   }
-  
   @media (max-width: 768px) {
-    #about .grid {
-      grid-template-columns: 1fr !important;
-      gap: 40px;
-    }
-    
-    #about .title {
-      text-align: center;
-    }
-    
-    #about .section-divider {
-      margin: 0 auto 20px auto !important;
-    }
+    .about-grid { grid-template-columns: 1fr !important; gap: 40px !important; text-align: center; }
+    .about-grid .title { text-align: center !important; }
+    .section-divider { margin: 0 auto 20px auto !important; }
+    .features-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 15px !important; }
+    .image-wrapper { max-width: 300px !important; margin: 0 auto; }
+    .placeholder-image { height: 400px !important; }
   }
-  
-  /* Hover effects */
+  @media (max-width: 480px) {
+    .features-grid { grid-template-columns: 1fr !important; }
+    .feature-card { padding: 12px 10px !important; }
+    .image-text { font-size: 1.5rem !important; }
+    .image-subtext { font-size: 0.8rem !important; }
+  }
   .feature-card:hover {
     transform: translateY(-5px);
     border-color: rgba(46, 196, 182, 0.3);
     box-shadow: 0 10px 25px rgba(46, 196, 182, 0.1);
   }
-  
   .feature-card:hover .feature-icon {
     color: #C9A96E !important;
     transform: scale(1.05);
   }
-  
   .image-wrapper:hover {
     transform: translateY(-5px);
     border-color: #2EC4B6;
     box-shadow: 0 25px 45px rgba(46, 196, 182, 0.15);
-  }
-  
-  .image-wrapper:hover .placeholder-image {
-    filter: brightness(1.05);
   }
 `
 document.head.appendChild(mediaStyles)

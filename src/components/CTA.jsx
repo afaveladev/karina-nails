@@ -54,7 +54,7 @@ const CTA = () => {
         <div className="section-divider"></div>
         <p style={styles.subtitle}>Números que hablan por sí solos</p>
 
-        <div style={styles.grid}>
+        <div className="stats-grid" style={styles.grid}>
           <div className="stat-card" style={styles.card}>
             <div style={styles.icon}>
               <FaStar size={50} color="#C9A96E" />
@@ -147,7 +147,7 @@ const styles = {
   },
   grid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+    gridTemplateColumns: 'repeat(4, 1fr)',
     gap: '30px',
     marginBottom: '60px'
   },
@@ -175,7 +175,7 @@ const styles = {
     marginBottom: '10px'
   },
   label: {
-    fontSize: '1rem',
+    fontSize: 'clamp(0.85rem, 2vw, 1rem)',
     color: '#F5F5F5',
     marginBottom: '8px',
     fontWeight: '500',
@@ -189,33 +189,35 @@ const styles = {
     marginTop: '20px'
   },
   button: {
-    fontSize: '1.1rem',
-    padding: '14px 45px',
+    fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
+    padding: 'clamp(10px, 3vw, 14px) clamp(25px, 6vw, 45px)',
     letterSpacing: '1px'
   }
 }
 
-// Hover effects
 const hoverStyles = document.createElement('style')
 hoverStyles.textContent = `
+  @media (max-width: 992px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 25px !important; }
+  }
+  @media (max-width: 768px) {
+    .stats-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+    .stat-card { padding: 25px 15px !important; }
+    .stat-card .number { font-size: clamp(1.5rem, 6vw, 2rem) !important; }
+  }
+  @media (max-width: 480px) {
+    .stat-card { padding: 20px 12px !important; }
+    .stat-card .icon svg { width: 35px !important; height: 35px !important; }
+    .stat-card .label { font-size: 0.85rem !important; }
+    .stat-card .description { font-size: 0.7rem !important; }
+  }
   .stat-card:hover {
     transform: translateY(-12px);
     border-color: rgba(46, 196, 182, 0.4);
     box-shadow: 0 20px 40px rgba(46, 196, 182, 0.15);
   }
-  
   .stat-card:hover .icon {
     transform: scale(1.1);
-  }
-  
-  .stat-card:hover .icon svg {
-    filter: drop-shadow(0 0 8px rgba(46, 196, 182, 0.5));
-  }
-  
-  @media (max-width: 768px) {
-    .stat-card:hover {
-      transform: translateY(-5px);
-    }
   }
 `
 document.head.appendChild(hoverStyles)

@@ -8,7 +8,6 @@ import Gallery from './components/Gallery'
 import Contact from './components/Contact'
 import CTA from './components/CTA'
 import Footer from './components/Footer'
-import Particles from './components/Particles'
 import CountdownTimer from './components/CountdownTimer'
 import './index.css'
 
@@ -28,7 +27,6 @@ function App() {
 
   return (
     <>
-      <Particles />
       <Navbar />
       <section id="hero"><Hero /></section>
       <div className="container"><CountdownTimer targetDate={targetDate} title="🔥 Promoción de lanzamiento" promoText="✨ 15% OFF en todos los combos ✨" /></div>

@@ -18,7 +18,6 @@ const Opinions = () => {
     { id: 10, name: 'Victoria Morales', rating: 5, text: 'Karina es la mejor! Atención personalizada y resultado increíble.', avatar: 'https://randomuser.me/api/portraits/women/10.jpg' }
   ]
 
-  // Renderizar estrellas según rating
   const renderStars = (rating) => {
     const stars = []
     const fullStars = Math.floor(rating)
@@ -37,7 +36,6 @@ const Opinions = () => {
     return stars
   }
 
-  // Autoplay
   useEffect(() => {
     let interval
     if (autoplay) {
@@ -73,8 +71,8 @@ const Opinions = () => {
         <div className="section-divider"></div>
         <p style={styles.subtitle}>Más de 500 clientas satisfechas</p>
 
-        <div style={styles.carouselContainer}>
-          <button onClick={goToPrev} style={styles.navButton}>❮</button>
+        <div className="testimonials-carousel" style={styles.carouselContainer}>
+          <button onClick={goToPrev} className="nav-btn" style={styles.navButton}>❮</button>
           
           <div style={styles.cardContainer}>
             <div className="testimonial-card" style={styles.card}>
@@ -85,10 +83,10 @@ const Opinions = () => {
             </div>
           </div>
 
-          <button onClick={goToNext} style={styles.navButton}>❯</button>
+          <button onClick={goToNext} className="nav-btn" style={styles.navButton}>❯</button>
         </div>
 
-        <div style={styles.dots}>
+        <div className="pagination-dots" style={styles.dots}>
           {testimonials.map((_, index) => (
             <button
               key={index}
@@ -147,10 +145,10 @@ const styles = {
     background: 'linear-gradient(135deg, #2EC4B6 0%, #20a094 100%)',
     color: '#F5F5F5',
     border: 'none',
-    width: '50px',
-    height: '50px',
+    width: 'clamp(40px, 8vw, 50px)',
+    height: 'clamp(40px, 8vw, 50px)',
     borderRadius: '50%',
-    fontSize: '1.5rem',
+    fontSize: 'clamp(1rem, 3vw, 1.5rem)',
     cursor: 'pointer',
     transition: 'all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1)',
     boxShadow: '0 4px 15px rgba(46, 196, 182, 0.2)'
@@ -158,20 +156,20 @@ const styles = {
   cardContainer: {
     flex: 1,
     maxWidth: '550px',
-    minWidth: '300px'
+    minWidth: '280px'
   },
   card: {
     background: 'rgba(26, 26, 30, 0.6)',
     backdropFilter: 'blur(10px)',
     borderRadius: '24px',
-    padding: '45px 35px',
+    padding: 'clamp(25px, 5vw, 45px) clamp(20px, 4vw, 35px)',
     textAlign: 'center',
     border: '1px solid rgba(46, 196, 182, 0.2)',
     transition: 'all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1)'
   },
   avatar: {
-    width: '85px',
-    height: '85px',
+    width: 'clamp(60px, 12vw, 85px)',
+    height: 'clamp(60px, 12vw, 85px)',
     borderRadius: '50%',
     objectFit: 'cover',
     marginBottom: '20px',
@@ -182,11 +180,12 @@ const styles = {
     marginBottom: '20px',
     display: 'flex',
     justifyContent: 'center',
-    gap: '6px'
+    gap: '6px',
+    flexWrap: 'wrap'
   },
   comment: {
     color: '#E0E0E0',
-    fontSize: '1rem',
+    fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
     lineHeight: '1.7',
     marginBottom: '20px',
     fontStyle: 'italic',
@@ -194,19 +193,19 @@ const styles = {
   },
   customerName: {
     color: '#F5F5F5',
-    fontSize: '1.2rem',
+    fontSize: 'clamp(1rem, 3vw, 1.2rem)',
     fontFamily: 'Playfair Display, serif',
     letterSpacing: '1px'
   },
   dots: {
     display: 'flex',
     justifyContent: 'center',
-    gap: '12px',
+    gap: 'clamp(8px, 2vw, 12px)',
     marginTop: '40px'
   },
   dot: {
-    width: '10px',
-    height: '10px',
+    width: 'clamp(8px, 2vw, 10px)',
+    height: 'clamp(8px, 2vw, 10px)',
     borderRadius: '50%',
     border: 'none',
     cursor: 'pointer',
@@ -214,24 +213,30 @@ const styles = {
   }
 }
 
-// Hover effects
 const hoverStyles = document.createElement('style')
 hoverStyles.textContent = `
+  @media (max-width: 768px) {
+    .testimonials-carousel { gap: 10px !important; }
+    .testimonial-card { padding: 25px 20px !important; }
+    .pagination-dots { gap: 8px !important; margin-top: 25px !important; }
+    .nav-btn { width: 40px !important; height: 40px !important; font-size: 1.2rem !important; }
+  }
+  @media (max-width: 480px) {
+    .testimonial-card { padding: 20px 15px !important; }
+    .comment { font-size: 0.85rem !important; }
+    .avatar { width: 60px !important; height: 60px !important; }
+    .stars { gap: 3px !important; }
+    .stars svg { width: 16px !important; height: 16px !important; }
+  }
   .testimonial-card:hover {
     transform: translateY(-8px);
     border-color: rgba(46, 196, 182, 0.4);
     box-shadow: 0 20px 40px rgba(46, 196, 182, 0.1);
   }
-  
   .nav-btn:hover {
     transform: scale(1.1);
     box-shadow: 0 8px 25px rgba(46, 196, 182, 0.4);
   }
-  
-  .nav-btn:active {
-    transform: scale(0.95);
-  }
-  
   .dot:hover {
     transform: scale(1.2);
     background-color: #2EC4B6 !important;

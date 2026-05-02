@@ -108,11 +108,56 @@ const styles = {
   accent: { background: 'linear-gradient(135deg, #2EC4B6 0%, #C9A96E 100%)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' },
   subtitle: { textAlign: 'center', color: '#A0A0A0', marginBottom: '40px', fontSize: '1rem' },
   lightbox: { position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(15,15,16,0.98)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' },
-  closeBtn: { position: 'absolute', top: '20px', right: '20px', background: 'none', border: 'none', cursor: 'pointer', zIndex: 2001 },
-  navBtn: { position: 'absolute', top: '50%', transform: 'translateY(-50%)', background: 'rgba(46,196,182,0.2)', border: 'none', borderRadius: '50%', width: '60px', height: '60px', cursor: 'pointer', zIndex: 2001, display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(10px)' },
+  closeBtn: { position: 'absolute', top: '20px', right: '20px', background: 'none', border: 'none', cursor: 'pointer', zIndex: 2001, transition: 'all 0.3s ease' },
+  navBtn: { position: 'absolute', top: '50%', transform: 'translateY(-50%)', background: 'rgba(46,196,182,0.2)', border: 'none', borderRadius: '50%', width: 'clamp(45px, 8vw, 60px)', height: 'clamp(45px, 8vw, 60px)', cursor: 'pointer', zIndex: 2001, display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(10px)', transition: 'all 0.3s ease' },
   lightboxContent: { maxWidth: '90%', maxHeight: '90%', textAlign: 'center' },
   lightboxImage: { maxWidth: '100%', maxHeight: '80vh', borderRadius: '20px' },
-  lightboxTitle: { color: '#C9A96E', marginTop: '20px', fontSize: '1.2rem' }
+  lightboxTitle: { color: '#C9A96E', marginTop: '20px', fontSize: 'clamp(0.9rem, 3vw, 1.2rem)' }
 }
+
+const responsiveStyles = document.createElement('style')
+responsiveStyles.textContent = `
+  @media (max-width: 992px) {
+    .gallery-grid-category { grid-template-columns: repeat(2, 1fr) !important; gap: 20px !important; }
+    .gallery-item img { height: 250px !important; }
+  }
+  @media (max-width: 768px) {
+    .gallery { padding: 70px 0 !important; }
+    .gallery-grid-category { grid-template-columns: 1fr !important; gap: 16px !important; }
+    .gallery-item img { height: 220px !important; }
+    .gallery-categories { gap: 10px !important; margin-bottom: 30px !important; }
+    .category-btn { padding: 6px 16px !important; font-size: 12px !important; }
+    .nav-btn { width: 45px !important; height: 45px !important; }
+    .nav-btn svg { width: 25px !important; height: 25px !important; }
+  }
+  @media (max-width: 480px) {
+    .gallery { padding: 50px 0 !important; }
+    .gallery-item img { height: 180px !important; }
+    .category-btn { padding: 5px 12px !important; font-size: 10px !important; }
+    .lightbox-content { width: 95% !important; }
+    .close-btn { top: 10px !important; right: 10px !important; }
+    .close-btn svg { width: 25px !important; height: 25px !important; }
+    .nav-btn { width: 40px !important; height: 40px !important; }
+    .nav-btn svg { width: 20px !important; height: 20px !important; }
+    .lightbox-title { font-size: 0.9rem !important; }
+  }
+  .gallery-item {
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    cursor: pointer;
+  }
+  .gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(46, 196, 182, 0.2);
+  }
+  .gallery-item:hover img {
+    transform: scale(1.08);
+  }
+  .gallery-item:hover .gallery-overlay {
+    transform: translateY(0);
+  }
+`
+document.head.appendChild(responsiveStyles)
 
 export default Gallery

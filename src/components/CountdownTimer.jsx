@@ -37,13 +37,13 @@ const CountdownTimer = ({ targetDate, title = "Promoción especial termina en", 
   if (isExpired) return null
 
   return (
-    <div style={styles.container}>
+    <div className="countdown-container" style={styles.container}>
       <div style={styles.promoBadge}>
         <FaClock color="#C9A96E" size={18} />
         <span style={styles.promoText}>{promoText}</span>
       </div>
       <p style={styles.title}>{title}</p>
-      <div style={styles.timer}>
+      <div className="countdown-timer" style={styles.timer}>
         <div style={styles.timeBlock}>
           <span style={styles.timeNumber}>{timeLeft.days}</span>
           <span style={styles.timeLabel}>Días</span>
@@ -87,21 +87,35 @@ const styles = {
     borderRadius: '30px',
     marginBottom: '15px'
   },
-  promoText: { color: '#C9A96E', fontSize: '14px', fontWeight: '600' },
-  title: { color: '#fff', fontSize: '14px', marginBottom: '15px', opacity: 0.8 },
-  timer: { display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' },
+  promoText: { color: '#C9A96E', fontSize: 'clamp(12px, 3vw, 14px)', fontWeight: '600' },
+  title: { color: '#fff', fontSize: 'clamp(12px, 3vw, 14px)', marginBottom: '15px', opacity: 0.8 },
+  timer: { display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 'clamp(5px, 2vw, 10px)', flexWrap: 'wrap' },
   timeBlock: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     background: 'rgba(0,0,0,0.5)',
-    padding: '10px 15px',
+    padding: 'clamp(8px, 2vw, 10px) clamp(12px, 3vw, 15px)',
     borderRadius: '12px',
-    minWidth: '60px'
+    minWidth: 'clamp(55px, 12vw, 60px)'
   },
-  timeNumber: { fontSize: '28px', fontWeight: 'bold', color: '#2EC4B6', fontFamily: 'Playfair Display, serif' },
-  timeLabel: { fontSize: '10px', color: '#A0A0A0', textTransform: 'uppercase' },
-  separator: { fontSize: '24px', color: '#C9A96E', fontWeight: 'bold' }
+  timeNumber: { fontSize: 'clamp(20px, 5vw, 28px)', fontWeight: 'bold', color: '#2EC4B6', fontFamily: 'Playfair Display, serif' },
+  timeLabel: { fontSize: 'clamp(8px, 2vw, 10px)', color: '#A0A0A0', textTransform: 'uppercase' },
+  separator: { fontSize: 'clamp(18px, 5vw, 24px)', color: '#C9A96E', fontWeight: 'bold' }
 }
+
+const responsiveStyles = document.createElement('style')
+responsiveStyles.textContent = `
+  @media (max-width: 768px) {
+    .countdown-container { padding: 15px !important; margin: 15px 0 !important; }
+    .countdown-timer { gap: 5px !important; }
+  }
+  @media (max-width: 480px) {
+    .countdown-container { padding: 12px !important; }
+    .countdown-timer { flex-wrap: wrap !important; justify-content: center !important; gap: 8px !important; }
+    .time-block { min-width: 50px !important; padding: 6px 10px !important; }
+  }
+`
+document.head.appendChild(responsiveStyles)
 
 export default CountdownTimer

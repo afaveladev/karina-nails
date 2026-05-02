@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/immutability */
 import { useState, useEffect } from 'react'
 import { database, ref, push, get, query, orderByChild, equalTo } from '../firebase/firebase'
 import { FaChevronLeft, FaChevronRight, FaCalendarAlt, FaClock, FaUser, FaPhone, FaCut, FaCommentDots, FaCheckCircle } from 'react-icons/fa'
@@ -40,6 +43,7 @@ const Contact = () => {
 
   const weekDays = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
 
+  // Cargar servicio preseleccionado
   useEffect(() => {
     const savedService = localStorage.getItem('selectedService')
     if (savedService) {
@@ -51,12 +55,14 @@ const Contact = () => {
 
   useEffect(() => {
     generateCalendar()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentMonth])
 
   useEffect(() => {
     if (selectedDate) {
       checkAvailableTimes()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDate])
 
   const getTodayDate = () => {
@@ -127,9 +133,18 @@ const Contact = () => {
 
   const handleDateSelect = (day) => {
     if (!day.isCurrentMonth || day.isPast) return
-    setSelectedDate(day.dateString)
-    setSelectedDateObj(day)
-    setSelectedTime('')
+    
+    const dateString = day.dateString
+    
+    if (selectedDate === dateString) {
+      setSelectedDate('')
+      setSelectedDateObj(null)
+      setSelectedTime('')
+    } else {
+      setSelectedDate(dateString)
+      setSelectedDateObj(day)
+      setSelectedTime('')
+    }
   }
 
   const checkAvailableTimes = async () => {
@@ -221,13 +236,11 @@ const Contact = () => {
 
   const isDateFull = citasDelDia >= 8
 
-  // Función para obtener estilo según si el campo tiene valor o no
   const getInputStyle = (value) => {
-    // Si tiene valor (no vacío, no null, no undefined, no string vacío)
     if (value && value.toString().trim() !== '') {
-      return styles.inputFilled  // Gris claro (con información)
+      return styles.inputFilled
     }
-    return styles.inputEmpty     // Negro (vacío)
+    return styles.inputEmpty
   }
 
   return (
@@ -239,9 +252,10 @@ const Contact = () => {
           <p style={styles.subtitle}>Selecciona día y horario, luego completa tus datos</p>
         </div>
 
-        <div style={styles.grid}>
-          {/* Columna Izquierda: Calendario + Horas + Mapa */}
+        <div className="contact-grid" style={styles.grid}>
+          {/* Columna Izquierda */}
           <div style={styles.leftColumn}>
+            {/* Calendario */}
             <div style={styles.card}>
               <div style={styles.cardHeader}>
                 <FaCalendarAlt style={styles.cardIcon} />
@@ -286,36 +300,40 @@ const Contact = () => {
               </div>
             </div>
 
-            <div style={styles.card}>
-              <div style={styles.cardHeader}>
-                <FaClock style={styles.cardIcon} />
-                <h3 style={styles.cardTitle}>Selecciona un horario</h3>
+            {/* Horarios */}
+            {selectedDate && (
+              <div style={styles.card}>
+                <div style={styles.cardHeader}>
+                  <FaClock style={styles.cardIcon} />
+                  <h3 style={styles.cardTitle}>Selecciona un horario</h3>
+                </div>
+                
+                {isDateFull && (
+                  <div style={styles.fullDayMsg}>⚠️ Este día está completo (8/8 citas)</div>
+                )}
+                
+                <div className="hours-grid" style={styles.hoursGrid}>
+                  {availableTimes.map((time) => (
+                    <button
+                      key={time}
+                      onClick={() => handleTimeSelect(time)}
+                      style={{
+                        ...styles.hourBtn,
+                        ...(selectedTime === time && styles.hourBtnSelected)
+                      }}
+                    >
+                      {time}
+                    </button>
+                  ))}
+                </div>
+                
+                {availableTimes.length === 0 && !isDateFull && (
+                  <div style={styles.noHoursMsg}>⏰ No hay horarios disponibles para esta fecha</div>
+                )}
               </div>
-              
-              {selectedDate && isDateFull && (
-                <div style={styles.fullDayMsg}>⚠️ Este día está completo (8/8 citas)</div>
-              )}
-              
-              <div style={styles.hoursGrid}>
-                {availableTimes.map((time) => (
-                  <button
-                    key={time}
-                    onClick={() => handleTimeSelect(time)}
-                    style={{
-                      ...styles.hourBtn,
-                      ...(selectedTime === time && styles.hourBtnSelected)
-                    }}
-                  >
-                    {time}
-                  </button>
-                ))}
-              </div>
-              
-              {selectedDate && availableTimes.length === 0 && !isDateFull && (
-                <div style={styles.noHoursMsg}>⏰ No hay horarios disponibles para esta fecha</div>
-              )}
-            </div>
+            )}
 
+            {/* Mapa */}
             <div style={styles.mapCard}>
               <div style={styles.map}>
                 <iframe
@@ -433,21 +451,17 @@ const styles = {
   title: { fontSize: 'clamp(2rem, 5vw, 3.2rem)', fontFamily: 'Playfair Display, serif', marginBottom: '10px', color: '#F5F5F5' },
   accent: { background: 'linear-gradient(135deg, #2EC4B6 0%, #C9A96E 100%)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' },
   subtitle: { textAlign: 'center', color: '#A0A0A0', fontSize: '1rem', marginTop: '15px' },
-  
   grid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' },
   leftColumn: { display: 'flex', flexDirection: 'column', gap: '30px' },
   rightColumn: {},
-  
   card: { background: 'rgba(26,26,30,0.6)', backdropFilter: 'blur(10px)', borderRadius: '20px', padding: '25px', border: '1px solid rgba(46,196,182,0.1)' },
   mapCard: { background: 'rgba(26,26,30,0.6)', backdropFilter: 'blur(10px)', borderRadius: '20px', padding: '0', overflow: 'hidden', border: '1px solid rgba(46,196,182,0.1)' },
   cardHeader: { display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px', paddingBottom: '15px', borderBottom: '1px solid rgba(46,196,182,0.2)' },
   cardIcon: { fontSize: '22px', color: '#2EC4B6' },
   cardTitle: { fontSize: '1.1rem', color: '#F5F5F5', fontFamily: 'Playfair Display, serif' },
-  
   calendarHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' },
   navBtn: { background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '8px', padding: '8px 12px', color: '#fff', cursor: 'pointer', transition: 'all 0.3s ease' },
   monthTitle: { fontSize: '1.1rem', color: '#C9A96E', fontFamily: 'Playfair Display, serif' },
-  
   weekDaysRow: { display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', marginBottom: '10px' },
   weekDayCell: { textAlign: 'center', fontSize: '12px', color: '#C9A96E', padding: '8px', fontWeight: '600' },
   calendarGrid: { display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '5px' },
@@ -455,27 +469,20 @@ const styles = {
   calendarDayOther: { opacity: 0.3, background: '#111' },
   calendarDayPast: { opacity: 0.4, background: '#0a0a0a', cursor: 'not-allowed', textDecoration: 'line-through' },
   calendarDaySelected: { background: 'linear-gradient(135deg, #2EC4B6, #D8A7B9)', color: '#000', borderColor: 'transparent' },
-  
   legend: { display: 'flex', justifyContent: 'center', gap: '20px', marginTop: '15px', paddingTop: '15px', borderTop: '1px solid rgba(255,255,255,0.05)' },
   legendItem: { display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: '#A0A0A0' },
   legendDot: { width: '12px', height: '12px', borderRadius: '50%' },
-  
   hoursGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))', gap: '10px', marginTop: '15px' },
   hourBtn: { background: '#1A1A1E', border: '1px solid #2a2a2e', borderRadius: '10px', padding: '10px', color: '#F5F5F5', cursor: 'pointer', textAlign: 'center', transition: 'all 0.3s ease', fontSize: '13px' },
   hourBtnSelected: { background: 'linear-gradient(135deg, #2EC4B6, #D8A7B9)', color: '#000', borderColor: 'transparent' },
-  
   fullDayMsg: { background: 'rgba(255,77,77,0.1)', color: '#ff6b6b', padding: '10px', borderRadius: '10px', textAlign: 'center', fontSize: '13px', marginBottom: '15px' },
   noHoursMsg: { textAlign: 'center', color: '#C9A96E', padding: '20px', fontSize: '13px' },
-  
   formCard: { background: 'rgba(26,26,30,0.6)', backdropFilter: 'blur(10px)', borderRadius: '20px', padding: '30px', border: '1px solid rgba(46,196,182,0.1)' },
   formTitle: { fontSize: '1.3rem', color: '#F5F5F5', fontFamily: 'Playfair Display, serif', marginBottom: '25px', textAlign: 'center' },
-  
   form: { display: 'flex', flexDirection: 'column', gap: '18px' },
   formGroup: { display: 'flex', flexDirection: 'column', gap: '6px' },
   label: { color: '#C9A96E', fontSize: '12px', fontWeight: '600', letterSpacing: '0.5px' },
   required: { color: '#ff6b6b' },
-  
-  // Input vacío: fondo negro
   inputEmpty: {
     backgroundColor: '#1A1A1E',
     border: '1px solid #2a2a2e',
@@ -488,7 +495,6 @@ const styles = {
     transition: 'all 0.3s ease',
     outline: 'none'
   },
-  // Input con información: fondo gris claro (como el nombre y teléfono en tu imagen)
   inputFilled: {
     backgroundColor: '#E8E8E8',
     border: '1px solid #2a2a2e',
@@ -501,11 +507,35 @@ const styles = {
     transition: 'all 0.3s ease',
     outline: 'none'
   },
-  
   submitBtn: { width: '100%', padding: '14px', fontSize: '16px', fontWeight: '600', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginTop: '10px', background: 'linear-gradient(135deg, #2EC4B6, #D8A7B9)', border: 'none', borderRadius: '40px', color: '#000', cursor: 'pointer', transition: 'all 0.3s ease' },
-  
   success: { color: '#2EC4B6', textAlign: 'center', marginTop: '15px', fontSize: '14px' },
   error: { color: '#EF4444', textAlign: 'center', marginTop: '15px', fontSize: '14px' }
 }
+
+const responsiveStyles = document.createElement('style')
+responsiveStyles.textContent = `
+  @media (max-width: 992px) {
+    .contact-grid { gap: 30px !important; }
+    .hours-grid { grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)) !important; gap: 10px !important; }
+  }
+  @media (max-width: 768px) {
+    .contact-grid { grid-template-columns: 1fr !important; gap: 30px !important; }
+    .contact-card { padding: 20px !important; }
+    .hours-grid { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)) !important; }
+    .hour-btn { padding: 8px 6px !important; font-size: 0.8rem !important; }
+    .contact-map iframe { height: 200px !important; }
+    .form-card { padding: 20px !important; }
+  }
+  @media (max-width: 480px) {
+    .contact-card { padding: 16px !important; }
+    .form-title { font-size: 1.1rem !important; }
+    input, select { padding: 10px 12px !important; font-size: 0.85rem !important; }
+    label { font-size: 0.75rem !important; }
+    iframe { height: 180px !important; }
+    .info { font-size: 0.75rem !important; }
+    .hours-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+`
+document.head.appendChild(responsiveStyles)
 
 export default Contact

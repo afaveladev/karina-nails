@@ -41,12 +41,10 @@ const Navbar = () => {
     setIndicatorStyle({ left: 0, width: 0 })
   }
 
-  // 3 clics en el logo para acceder al admin / redirigir al inicio
   const handleLogoClick = () => {
     const newCount = clickCount + 1
     setClickCount(newCount)
     
-    // Redirigir al inicio (scroll suave al hero)
     const heroSection = document.getElementById('hero')
     if (heroSection) {
       heroSection.scrollIntoView({ behavior: 'smooth' })
@@ -74,7 +72,7 @@ const Navbar = () => {
     <>
       <nav className={`navbar-glass ${scrolled ? 'scrolled-nav' : ''}`} style={styles.navbar}>
         <div style={styles.container}>
-          {/* Logo circular - solo la imagen */}
+          {/* Logo circular */}
           <div className="logo-container" style={styles.logo} onClick={handleLogoClick}>
             <img src={logo} alt="Karina's Nails & Lashes" style={styles.logoImage} />
           </div>
@@ -104,14 +102,22 @@ const Navbar = () => {
       </nav>
 
       {/* Mobile Menu Overlay */}
-      <div className={`mobile-menu-overlay ${isOpen ? 'open' : ''}`} style={{ ...styles.mobileMenu, ...(isOpen ? styles.mobileMenuOpen : {}) }}>
-        <ul style={styles.mobileMenuItems}>
-          {menuItems.map((item) => (
-            <li key={item.id} style={styles.mobileMenuItem} onClick={() => scrollToSection(item.id)}>
-              {item.label}
-            </li>
-          ))}
-        </ul>
+      <div className={`mobile-menu-overlay ${isOpen ? 'active' : ''}`} style={styles.mobileMenuOverlay}>
+        <div className={`mobile-menu ${isOpen ? 'active' : ''}`} style={styles.mobileMenu}>
+          <div style={styles.mobileMenuHeader}>
+            <img src={logo} alt="Karina's Nails & Lashes" style={styles.mobileLogo} />
+            <button className="mobile-menu-close" onClick={() => setIsOpen(false)} style={styles.mobileCloseBtn}>
+              <FaTimes size={24} color="#2EC4B6" />
+            </button>
+          </div>
+          <ul style={styles.mobileMenuItems}>
+            {menuItems.map((item) => (
+              <li key={item.id} style={styles.mobileMenuItem} onClick={() => scrollToSection(item.id)}>
+                {item.label}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </>
   )
@@ -143,8 +149,8 @@ const styles = {
     zIndex: 10
   },
   logoImage: {
-    width: '50px',
-    height: '50px',
+    width: 'clamp(35px, 5vw, 50px)',
+    height: 'clamp(35px, 5vw, 50px)',
     borderRadius: '50%',
     objectFit: 'cover',
     border: '2px solid #2EC4B6',
@@ -169,7 +175,7 @@ const styles = {
   menuItem: {
     color: '#F5F5F5',
     cursor: 'pointer',
-    fontSize: '0.9rem',
+    fontSize: 'clamp(0.75rem, 1.5vw, 0.9rem)',
     fontFamily: 'Poppins, sans-serif',
     transition: 'all 0.3s ease',
     fontWeight: 500,
@@ -197,48 +203,84 @@ const styles = {
     transition: 'all 0.3s ease',
     zIndex: 10
   },
+  mobileMenuOverlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backdropFilter: 'blur(5px)',
+    zIndex: 998,
+    opacity: 0,
+    visibility: 'hidden',
+    transition: 'all 0.4s ease'
+  },
   mobileMenu: {
     position: 'fixed',
     top: 0,
     right: '-100%',
-    width: '70%',
-    maxWidth: '320px',
+    width: 'min(320px, 80%)',
     height: '100vh',
-    backgroundColor: '#0F0F10',
+    backgroundColor: 'rgba(15, 15, 16, 0.95)',
+    backdropFilter: 'blur(12px)',
     zIndex: 999,
     transition: 'right 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1)',
     borderLeft: '2px solid #2EC4B6',
-    boxShadow: '-5px 0 30px rgba(0, 0, 0, 0.5)'
+    boxShadow: '-5px 0 30px rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    flexDirection: 'column'
   },
-  mobileMenuOpen: {
-    right: 0
+  mobileMenuHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '25px',
+    borderBottom: '1px solid rgba(46, 196, 182, 0.2)'
+  },
+  mobileLogo: {
+    width: '45px',
+    height: '45px',
+    borderRadius: '50%',
+    objectFit: 'cover',
+    border: '2px solid #2EC4B6'
+  },
+  mobileCloseBtn: {
+    background: 'rgba(255, 255, 255, 0.05)',
+    border: 'none',
+    borderRadius: '50%',
+    width: '40px',
+    height: '40px',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'all 0.3s ease'
   },
   mobileMenuItems: {
+    flex: 1,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100%',
-    gap: '35px',
+    gap: '25px',
     listStyle: 'none',
-    padding: '0',
-    margin: '0'
+    padding: '30px'
   },
   mobileMenuItem: {
     color: '#F5F5F5',
-    fontSize: '1.3rem',
+    fontSize: 'clamp(1rem, 4vw, 1.2rem)',
     fontFamily: 'Playfair Display, serif',
     cursor: 'pointer',
     transition: 'all 0.3s ease',
     letterSpacing: '1px',
-    padding: '12px 24px',
+    padding: '12px 20px',
     borderRadius: '40px',
     width: '100%',
     textAlign: 'center'
   }
 }
 
-// Estilos globales
 const globalStyles = document.createElement('style')
 globalStyles.textContent = `
   @media (min-width: 993px) {
@@ -252,18 +294,26 @@ globalStyles.textContent = `
   }
   
   .navbar-glass {
-    background: rgba(15, 15, 16, 0.8);
+    background: rgba(15, 15, 16, 0.5) !important;
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(46, 196, 182, 0.2);
   }
   
   .scrolled-nav {
     padding: 10px 0 !important;
-    background: rgba(15, 15, 16, 0.95) !important;
+    background: rgba(15, 15, 16, 0.7) !important;
     border-bottom: 1px solid rgba(46, 196, 182, 0.3) !important;
   }
   
-  /* Efecto hover en el logo circular */
+  .mobile-menu-overlay.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
+  .mobile-menu.active {
+    right: 0 !important;
+  }
+  
   .logo-container:hover .logo-image {
     transform: scale(1.08);
     border-color: #C9A96E;
@@ -271,18 +321,24 @@ globalStyles.textContent = `
   }
   
   .magic-menu-desktop li:hover { color: #F5F5F5 !important; }
-  .mobile-menu-overlay li:hover { color: #2EC4B6 !important; background: rgba(46, 196, 182, 0.1); }
   
-  @media (max-width: 768px) {
-    .logo-image { width: 40px !important; height: 40px !important; }
-    .container { padding: 0 16px !important; }
+  .mobile-menu-close:hover {
+    background: #2EC4B6 !important;
   }
   
-  @media (max-width: 480px) {
-    .logo-image { width: 35px !important; height: 35px !important; }
-    .mobile-menu-icon svg { width: 24px !important; height: 24px !important; }
+  .mobile-menu-close:hover svg {
+    color: #000 !important;
+  }
+  
+  .mobile-menu-item:hover {
+    color: #2EC4B6 !important;
+    background: rgba(46, 196, 182, 0.1);
+  }
+  
+  @media (max-width: 768px) {
+    .navbar-container { padding: 0 16px !important; }
   }
 `
 document.head.appendChild(globalStyles)
 
-export default Navbar 
+export default Navbar
