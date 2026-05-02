@@ -1,238 +1,151 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { GiLipstick } from 'react-icons/gi'
+import { FaStar, FaGem } from 'react-icons/fa'
 
 const Hero = () => {
   const titleRef = useRef(null)
   const subtitleRef = useRef(null)
   const iconRef = useRef(null)
+  const badgeRef = useRef(null)
+  const descriptionRef = useRef(null)
+  const buttonRef = useRef(null)
+  const containerRef = useRef(null)
+  const glowOrb1Ref = useRef(null)
+  const glowOrb2Ref = useRef(null)
 
   useEffect(() => {
-    // Animación del título
-    const title = titleRef.current
-    const titleText = title.innerText
-    title.innerHTML = ''
-
-    titleText.split('').forEach((char, i) => {
-      const span = document.createElement('span')
-      span.innerText = char === ' ' ? '\u00A0' : char
-      span.style.opacity = '0'
-      span.style.display = 'inline-block'
-      title.appendChild(span)
-
-      gsap.to(span, {
-        opacity: 1,
-        duration: 0.05,
-        delay: i * 0.05,
-        ease: 'power2.out'
+    const ctx = gsap.context(() => {
+      // Orbes flotantes
+      gsap.to(glowOrb1Ref.current, {
+        x: 40, y: -30, duration: 8, repeat: -1, yoyo: true, ease: "sine.inOut"
       })
-    })
-
-    // Animación del subtítulo
-    const subtitle = subtitleRef.current
-    const subtitleText = subtitle.innerText
-    subtitle.innerHTML = ''
-
-    subtitleText.split('').forEach((char, i) => {
-      const span = document.createElement('span')
-      span.innerText = char === ' ' ? '\u00A0' : char
-      span.style.opacity = '0'
-      span.style.display = 'inline-block'
-      subtitle.appendChild(span)
-
-      gsap.to(span, {
-        opacity: 1,
-        duration: 0.05,
-        delay: i * 0.05 + 0.5,
-        ease: 'power2.out'
+      gsap.to(glowOrb2Ref.current, {
+        x: -35, y: 40, duration: 10, repeat: -1, yoyo: true, ease: "sine.inOut"
       })
+
+      // Badge
+      gsap.from(badgeRef.current, {
+        y: -50, opacity: 0, duration: 1, delay: 0.2, ease: "back.out(1.2)"
+      })
+
+      // Ícono
+      gsap.from(iconRef.current, {
+        scale: 0, rotation: -180, duration: 1, ease: "back.out(1.5)"
+      })
+      gsap.to(iconRef.current, {
+        rotation: 360, duration: 12, repeat: -1, ease: "none", delay: 1
+      })
+      gsap.to(iconRef.current, {
+        scale: 1.08, duration: 1.5, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 1.5
+      })
+
+      // Título letra por letra
+      const title = titleRef.current
+      const titleText = title.innerText
+      title.innerHTML = ''
+      titleText.split('').forEach((char, i) => {
+        const span = document.createElement('span')
+        span.innerText = char === ' ' ? '\u00A0' : char
+        span.style.opacity = '0'
+        span.style.display = 'inline-block'
+        span.style.transform = 'translateY(30px)'
+        title.appendChild(span)
+        gsap.to(span, {
+          opacity: 1, y: 0, duration: 0.3, delay: i * 0.03 + 0.5, ease: "back.out(1)"
+        })
+      })
+
+      // Subtítulo
+      const subtitle = subtitleRef.current
+      const subtitleText = subtitle.innerText
+      subtitle.innerHTML = ''
+      subtitleText.split('').forEach((char, i) => {
+        const span = document.createElement('span')
+        span.innerText = char === ' ' ? '\u00A0' : char
+        span.style.opacity = '0'
+        span.style.display = 'inline-block'
+        span.style.transform = 'scale(0) rotateY(90deg)'
+        subtitle.appendChild(span)
+        gsap.to(span, {
+          opacity: 1, scale: 1, rotateY: 0, duration: 0.25, delay: i * 0.025 + 1.2, ease: "elastic.out(1, 0.5)"
+        })
+      })
+
+      // Descripción
+      gsap.from(descriptionRef.current, {
+        opacity: 0, y: 20, duration: 0.8, delay: 1.9, ease: "power2.out"
+      })
+
+      // Botón
+      gsap.from(buttonRef.current, {
+        scale: 0, opacity: 0, duration: 0.8, delay: 2.1, ease: "back.out(1.5)"
+      })
+
+      // Efecto 3D mouse
+      if (containerRef.current) {
+        containerRef.current.addEventListener('mousemove', (e) => {
+          const rect = containerRef.current.getBoundingClientRect()
+          const x = (e.clientX - rect.left) / rect.width - 0.5
+          const y = (e.clientY - rect.top) / rect.height - 0.5
+          gsap.to(containerRef.current, {
+            rotationY: x * 5, rotationX: y * 5, duration: 0.5, ease: "power2.out"
+          })
+        })
+        containerRef.current.addEventListener('mouseleave', () => {
+          gsap.to(containerRef.current, {
+            rotationY: 0, rotationX: 0, duration: 0.8, ease: "elastic.out(1, 0.5)"
+          })
+        })
+      }
     })
 
-    // Ícono girando
-    gsap.to(iconRef.current, {
-      rotation: 360,
-      duration: 12,
-      repeat: -1,
-      ease: 'none'
-    })
+    return () => ctx.revert()
   }, [])
 
+  const handleBookAppointment = () => {
+    const contactSection = document.getElementById('contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
-    <section id="hero" style={styles.hero}>
-      <div style={styles.bgDecoration}>
-        <div style={styles.glowOrb1}></div>
-        <div style={styles.glowOrb2}></div>
+    <section id="hero">
+      <div className="hero-bg-decoration">
+        <div ref={glowOrb1Ref} className="hero-glow-orb-1"></div>
+        <div ref={glowOrb2Ref} className="hero-glow-orb-2"></div>
       </div>
 
-      <div style={styles.container}>
-        
-        {/* Ícono */}
-        <div ref={iconRef} style={styles.icon}>
-          <GiLipstick size={window.innerWidth <= 480 ? 55 : window.innerWidth <= 768 ? 70 : 90} color="#2EC4B6" />
+      <div ref={containerRef} style={{ position: 'relative', zIndex: 2, maxWidth: '900px', margin: '0 auto', padding: '20px', transformStyle: 'preserve-3d' }}>
+        <div ref={iconRef} style={{ marginBottom: '25px', display: 'inline-block' }}>
+          <GiLipstick size={90} color="#2EC4B6" />
         </div>
 
-        {/* Badge estilo imagen */}
-        <div style={styles.studioBadge}>
-          ✦ Studio Premium de Belleza
+        <div ref={badgeRef} className="hero-studio-badge">
+          <FaStar style={{ fontSize: '12px', marginRight: '5px' }} />
+          ✦ STUDIO PREMIUM DE BELLEZA
+          <FaGem style={{ fontSize: '10px', marginLeft: '5px' }} />
         </div>
 
-        {/* Título */}
-        <h1 ref={titleRef} style={styles.title}>
-          Karina Nails
-        </h1>
+        <h1 ref={titleRef} className="hero-title">Karina Nails</h1>
+        <h2 ref={subtitleRef} className="hero-subtitle">& Lashes</h2>
+        <div className="section-divider"></div>
+        <p ref={descriptionRef} className="hero-description">Belleza que eleva tu estilo</p>
 
-        {/* Subtítulo */}
-        <h2 ref={subtitleRef} style={styles.subtitle}>
-          & Lashes
-        </h2>
-
-        {/* Línea */}
-        <div style={styles.goldLine}></div>
-
-        {/* Descripción */}
-        <p style={styles.description}>
-          Belleza que eleva tu estilo
-        </p>
-
-        {/* Botón */}
-        <button
-          className="btn-primary glow-effect"
-          onClick={() => {
-            const contactSection = document.getElementById('contact')
-            if (contactSection) {
-              contactSection.scrollIntoView({ behavior: 'smooth' })
-            }
-          }}
-        >
-          Agendar Cita
+        <button ref={buttonRef} className="btn-primary" onClick={handleBookAppointment}>
+          ✨ Agendar Cita ✨
         </button>
+
+        <div className="hero-scroll-indicator">
+          <div className="scroll-wheel">
+            <div className="scroll-dot"></div>
+          </div>
+          <p>Scroll</p>
+        </div>
       </div>
     </section>
   )
 }
-
-const styles = {
-  hero: {
-    minHeight: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    background: 'radial-gradient(circle at 10% 20%, rgba(46, 196, 182, 0.08) 0%, #0A0A0F 90%)',
-    textAlign: 'center',
-    position: 'relative',
-    overflow: 'hidden',
-    padding: '80px 20px'
-  },
-
-  bgDecoration: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    zIndex: 0
-  },
-
-  glowOrb1: {
-    position: 'absolute',
-    top: '-20%',
-    right: '-10%',
-    width: 'min(500px, 80vw)',
-    height: 'min(500px, 80vw)',
-    borderRadius: '50%',
-    background: 'radial-gradient(circle, rgba(46,196,182,0.12) 0%, transparent 70%)',
-    animation: 'floatGlow 12s ease-in-out infinite'
-  },
-
-  glowOrb2: {
-    position: 'absolute',
-    bottom: '-20%',
-    left: '-10%',
-    width: 'min(400px, 70vw)',
-    height: 'min(400px, 70vw)',
-    borderRadius: '50%',
-    background: 'radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%)',
-    animation: 'floatGlow 15s ease-in-out infinite reverse'
-  },
-
-  container: {
-    padding: '20px',
-    position: 'relative',
-    zIndex: 1,
-    maxWidth: '900px'
-  },
-
-  icon: {
-    marginBottom: '25px',
-    filter: 'drop-shadow(0 0 15px rgba(46,196,182,0.4))'
-  },
-
-  // 💎 BADGE PRO
-  studioBadge: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '8px',
-    padding: '8px 18px',
-    borderRadius: '30px',
-    fontSize: 'clamp(0.65rem, 3.5vw, 0.9rem)',
-    color: '#C9A96E',
-    border: '1px solid rgba(255,255,255,0.15)',
-    background: 'rgba(255,255,255,0.05)',
-    backdropFilter: 'blur(12px)',
-    marginBottom: '20px',
-    letterSpacing: '2px'
-  },
-
-  // 🎨 TÍTULO CON DEGRADADO
-  title: {
-    fontSize: 'clamp(1.8rem, 7vw, 4.5rem)',
-    fontFamily: 'Playfair Display, serif',
-    letterSpacing: 'clamp(1px, 1.5vw, 3px)',
-    marginBottom: '5px',
-    lineHeight: '1.2',
-
-    background: 'linear-gradient(90deg, #ffffff 0%, #dfefff 30%, #2EC4B6 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent'
-  },
-
-  // 🎨 SUBTÍTULO CON DEGRADADO
-  subtitle: {
-    fontSize: 'clamp(1.5rem, 6vw, 3rem)',
-    fontFamily: 'Playfair Display, serif',
-    letterSpacing: 'clamp(1px, 1.5vw, 3px)',
-    marginTop: '-10px',
-    marginBottom: '15px',
-    lineHeight: '1.2',
-
-    background: 'linear-gradient(90deg, #ffffff 0%, #dfefff 30%, #2EC4B6 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent'
-  },
-
-  goldLine: {
-    width: 'clamp(50px, 15vw, 80px)',
-    height: '2px',
-    background: 'linear-gradient(90deg, #2EC4B6, #C9A96E, #D8A7B9)',
-    margin: '20px auto',
-    borderRadius: '2px'
-  },
-
-  description: {
-    fontSize: 'clamp(0.8rem, 3.5vw, 1.1rem)',
-    color: '#A0A0A0',
-    marginBottom: '35px',
-    fontFamily: 'Poppins, sans-serif',
-    letterSpacing: '1px'
-  }
-}
-
-// Animación global
-const animationStyles = document.createElement('style')
-animationStyles.textContent = `
-@keyframes floatGlow {
-  0%, 100% { transform: translate(0,0) scale(1); opacity: 0.5; }
-  50% { transform: translate(30px,20px) scale(1.1); opacity: 0.8; }
-}
-`
-document.head.appendChild(animationStyles)
 
 export default Hero
