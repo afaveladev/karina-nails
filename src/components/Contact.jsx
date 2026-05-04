@@ -43,13 +43,39 @@ const Contact = () => {
 
   const weekDays = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
 
-  // Cargar servicio preseleccionado
+  // ✅ CARGAR SERVICIO PRESELECCIONADO (ARREGLADO)
   useEffect(() => {
-    const savedService = localStorage.getItem('selectedService')
-    if (savedService) {
-      const service = JSON.parse(savedService)
-      setFormData(prev => ({ ...prev, service: service.name }))
-      localStorage.removeItem('selectedService')
+    const loadService = () => {
+      const savedService = localStorage.getItem('selectedService')
+      console.log("📦 Servicio guardado:", savedService)
+
+      if (savedService) {
+        try {
+          const service = JSON.parse(savedService)
+
+          if (service && service.name) {
+            setFormData(prev => ({ ...prev, service: service.name }))
+            console.log("🎯 Servicio cargado:", service.name)
+          } 
+          else if (typeof service === 'string') {
+            setFormData(prev => ({ ...prev, service: service }))
+          }
+
+          localStorage.removeItem('selectedService')
+        } catch (error) {
+          console.error("❌ Error:", error)
+        }
+      }
+    }
+
+    // carga inicial
+    loadService()
+
+    // 🔥 FIX IMPORTANTE (escuchar click desde Services)
+    window.addEventListener('serviceSelected', loadService)
+
+    return () => {
+      window.removeEventListener('serviceSelected', loadService)
     }
   }, [])
 
@@ -250,6 +276,13 @@ const Contact = () => {
           <h2 style={styles.title}>Agenda tu <span style={styles.accent}>Cita</span></h2>
           <div className="section-divider"></div>
           <p style={styles.subtitle}>Selecciona día y horario, luego completa tus datos</p>
+          
+          {/* ✅ Indicador visual si hay servicio preseleccionado */}
+          {formData.service && (
+            <div style={styles.preselectedBadge}>
+              ✨ Servicio seleccionado: <strong>{formData.service}</strong>
+            </div>
+          )}
         </div>
 
         <div className="contact-grid" style={styles.grid}>
@@ -387,7 +420,10 @@ const Contact = () => {
                     name="service"
                     value={formData.service}
                     onChange={handleInputChange}
-                    style={getInputStyle(formData.service)}
+                    style={{
+                      ...getInputStyle(formData.service),
+                      ...(formData.service && styles.selectFilled)
+                    }}
                     required
                   >
                     <option value="">Selecciona un servicio</option>
@@ -451,6 +487,16 @@ const styles = {
   title: { fontSize: 'clamp(2rem, 5vw, 3.2rem)', fontFamily: 'Playfair Display, serif', marginBottom: '10px', color: '#F5F5F5' },
   accent: { background: 'linear-gradient(135deg, #2EC4B6 0%, #C9A96E 100%)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' },
   subtitle: { textAlign: 'center', color: '#A0A0A0', fontSize: '1rem', marginTop: '15px' },
+  preselectedBadge: { 
+    display: 'inline-block',
+    marginTop: '15px',
+    padding: '8px 20px',
+    background: 'linear-gradient(135deg, rgba(46,196,182,0.15), rgba(201,169,110,0.15))',
+    borderRadius: '30px',
+    color: '#C9A96E',
+    fontSize: '0.85rem',
+    backdropFilter: 'blur(8px)'
+  },
   grid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' },
   leftColumn: { display: 'flex', flexDirection: 'column', gap: '30px' },
   rightColumn: {},
@@ -506,6 +552,10 @@ const styles = {
     width: '100%',
     transition: 'all 0.3s ease',
     outline: 'none'
+  },
+  selectFilled: {
+    backgroundColor: '#E8E8E8',
+    color: '#000000'
   },
   submitBtn: { width: '100%', padding: '14px', fontSize: '16px', fontWeight: '600', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginTop: '10px', background: 'linear-gradient(135deg, #2EC4B6, #D8A7B9)', border: 'none', borderRadius: '40px', color: '#000', cursor: 'pointer', transition: 'all 0.3s ease' },
   success: { color: '#2EC4B6', textAlign: 'center', marginTop: '15px', fontSize: '14px' },

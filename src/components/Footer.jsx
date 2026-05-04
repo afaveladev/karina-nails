@@ -121,7 +121,7 @@ const Footer = () => {
                 <FaFacebook size={20} />
               </a>
               <a 
-                href="https://wa.me/528715353066" 
+                href="https://wa.me/5218713328236" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="social-icon-premium whatsapp"
@@ -156,7 +156,7 @@ const Footer = () => {
               </li>
               <li>
                 <FaPhone className="contact-icon phone" />
-                <span>871 535 3066</span>
+                <span>8713328236</span>
               </li>
               <li>
                 <FaClock className="contact-icon clock" />
@@ -189,7 +189,7 @@ const Footer = () => {
 
       {/* WhatsApp flotante */}
       <a 
-        href="https://wa.me/528715353066?text=Hola%20Karina,%20quisiera%20agendar%20una%20cita" 
+        href="https://wa.me/5218713328236?text=Hola%20Karina,%20quisiera%20agendar%20una%20cita" 
         target="_blank" 
         rel="noopener noreferrer" 
         className="whatsapp-float-premium"

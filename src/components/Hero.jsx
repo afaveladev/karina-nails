@@ -31,12 +31,24 @@ export default function Hero() {
     });
   }, { scope: heroRef });
 
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // Número de WhatsApp correctamente formateado
+  const whatsappNumber = "5218713328236"; // Formato internacional sin +
+  const whatsappMessage = "Hola%20Karina%2C%20quisiera%20agendar%20una%20cita";
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+
   return (
     <section id="hero" ref={heroRef}>
       {/* Imagen de fondo */}
       <img src={LugarImg} alt="Background" className="hero-bg" />
 
-      {/* Overlay bien aplicado */}
+      {/* Overlay */}
       <div className="hero-overlay"></div>
 
       {/* Contenido */}
@@ -64,18 +76,30 @@ export default function Hero() {
 
         {/* Botón */}
         <div className="hero-actions">
-          <button className="btn-primary">
+          <button className="btn-primary" onClick={scrollToContact}>
             Reservar ahora <FaArrowRight />
           </button>
         </div>
 
-        {/* Redes */}
+        {/* Redes Sociales */}
         <div className="hero-social">
-          <a href="#" className="hero-social-icon instagram">
+          <a 
+            href="https://instagram.com/karinaglows" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="hero-social-icon instagram"
+            aria-label="Instagram"
+          >
             <FaInstagram size={22} />
           </a>
 
-          <a href="#" className="hero-social-icon whatsapp">
+          <a 
+            href={whatsappLink}
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="hero-social-icon whatsapp"
+            aria-label="WhatsApp"
+          >
             <FaWhatsapp size={22} />
           </a>
         </div>
