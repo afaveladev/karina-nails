@@ -12,18 +12,16 @@ import CTA from './components/CTA'
 import Footer from './components/Footer'
 import CountdownTimer from './components/CountdownTimer'
 import './index.css'
+import lugarImg from './assets/Lugar.webp'
 
 gsap.registerPlugin(ScrollTrigger)
 
 function App() {
   useEffect(() => {
-    // Animaciones fade-up con GSAP + ScrollTrigger
+    // Animaciones fade-up con ScrollTrigger
     gsap.utils.toArray('.fade-up').forEach((element) => {
-      gsap.fromTo(element, 
-        {
-          opacity: 0,
-          y: 50,
-        },
+      gsap.fromTo(element,
+        { opacity: 0, y: 50 },
         {
           opacity: 1,
           y: 0,
@@ -32,28 +30,6 @@ function App() {
           scrollTrigger: {
             trigger: element,
             start: "top 85%",
-            end: "bottom 70%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      )
-    })
-
-    // Animación de entrada para secciones
-    gsap.utils.toArray('section').forEach((section, i) => {
-      gsap.fromTo(section,
-        {
-          scale: 0.98,
-          opacity: 0.5
-        },
-        {
-          scale: 1,
-          opacity: 1,
-          duration: 0.6,
-          scrollTrigger: {
-            trigger: section,
-            start: "top 90%",
-            end: "bottom 80%",
             toggleActions: "play none none reverse"
           }
         }
@@ -69,29 +45,25 @@ function App() {
       <Navbar />
       <Hero />
       
-      {/* Countdown Timer con animación */}
-      <div className="countdown-wrapper fade-up">
-        <div className="container">
-          <CountdownTimer 
-            targetDate={targetDate} 
-            title="🔥 Promoción de lanzamiento" 
-            promoText="✨ 15% OFF en todos los combos ✨" 
-          />
-        </div>
+      <div className="container fade-up">
+        <CountdownTimer 
+          targetDate={targetDate} 
+          title="🔥 Promoción de lanzamiento" 
+          promoText="✨ 15% OFF en todos los combos ✨" 
+        />
       </div>
       
-      <Services />
-      <About />
-      <Opinions />
-      <Gallery />
-      <CTA />
-      <Contact />
+      <div className="fade-up"><Services /></div>
+      <div className="fade-up"><About /></div>
+      <div className="fade-up"><Opinions /></div>
+      <div className="fade-up"><Gallery /></div>
+      <div className="fade-up"><CTA /></div>
+      <div className="fade-up"><Contact /></div>
       <Footer />
       
-      {/* Botón flotante de WhatsApp con GSAP */}
-      <div className="whatsapp-float" id="whatsappFloat">
+      <a href="https://wa.me/541134567890" className="whatsapp-float" target="_blank" rel="noopener noreferrer">
         <i className="fab fa-whatsapp"></i>
-      </div>
+      </a>
     </>
   )
 }

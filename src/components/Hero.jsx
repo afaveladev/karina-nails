@@ -1,151 +1,85 @@
-import { useEffect, useRef } from 'react'
-import gsap from 'gsap'
-import { GiLipstick } from 'react-icons/gi'
-import { FaStar, FaGem } from 'react-icons/fa'
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { FaSpa, FaArrowRight, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import LugarImg from "../assets/Lugar.webp";
 
-const Hero = () => {
-  const titleRef = useRef(null)
-  const subtitleRef = useRef(null)
-  const iconRef = useRef(null)
-  const badgeRef = useRef(null)
-  const descriptionRef = useRef(null)
-  const buttonRef = useRef(null)
-  const containerRef = useRef(null)
-  const glowOrb1Ref = useRef(null)
-  const glowOrb2Ref = useRef(null)
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Orbes flotantes
-      gsap.to(glowOrb1Ref.current, {
-        x: 40, y: -30, duration: 8, repeat: -1, yoyo: true, ease: "sine.inOut"
-      })
-      gsap.to(glowOrb2Ref.current, {
-        x: -35, y: 40, duration: 10, repeat: -1, yoyo: true, ease: "sine.inOut"
-      })
+export default function Hero() {
+  const heroRef = useRef(null);
 
-      // Badge
-      gsap.from(badgeRef.current, {
-        y: -50, opacity: 0, duration: 1, delay: 0.2, ease: "back.out(1.2)"
-      })
+  useGSAP(() => {
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      // Ícono
-      gsap.from(iconRef.current, {
-        scale: 0, rotation: -180, duration: 1, ease: "back.out(1.5)"
-      })
-      gsap.to(iconRef.current, {
-        rotation: 360, duration: 12, repeat: -1, ease: "none", delay: 1
-      })
-      gsap.to(iconRef.current, {
-        scale: 1.08, duration: 1.5, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 1.5
-      })
+    tl.from(".hero-badge-wrapper", { y: 20, opacity: 0, duration: 0.6 })
+      .from(".hero-title", { y: 40, opacity: 0, duration: 0.8 }, "-=0.3")
+      .from(".hero-subtitle", { y: 30, opacity: 0, duration: 0.7 }, "-=0.4")
+      .from(".hero-description", { y: 20, opacity: 0, duration: 0.6 }, "-=0.4")
+      .from(".hero-actions", { y: 20, opacity: 0, duration: 0.6 }, "-=0.3")
+      .from(".hero-social", { opacity: 0, y: 10, duration: 0.5 }, "-=0.2");
 
-      // Título letra por letra
-      const title = titleRef.current
-      const titleText = title.innerText
-      title.innerHTML = ''
-      titleText.split('').forEach((char, i) => {
-        const span = document.createElement('span')
-        span.innerText = char === ' ' ? '\u00A0' : char
-        span.style.opacity = '0'
-        span.style.display = 'inline-block'
-        span.style.transform = 'translateY(30px)'
-        title.appendChild(span)
-        gsap.to(span, {
-          opacity: 1, y: 0, duration: 0.3, delay: i * 0.03 + 0.5, ease: "back.out(1)"
-        })
-      })
-
-      // Subtítulo
-      const subtitle = subtitleRef.current
-      const subtitleText = subtitle.innerText
-      subtitle.innerHTML = ''
-      subtitleText.split('').forEach((char, i) => {
-        const span = document.createElement('span')
-        span.innerText = char === ' ' ? '\u00A0' : char
-        span.style.opacity = '0'
-        span.style.display = 'inline-block'
-        span.style.transform = 'scale(0) rotateY(90deg)'
-        subtitle.appendChild(span)
-        gsap.to(span, {
-          opacity: 1, scale: 1, rotateY: 0, duration: 0.25, delay: i * 0.025 + 1.2, ease: "elastic.out(1, 0.5)"
-        })
-      })
-
-      // Descripción
-      gsap.from(descriptionRef.current, {
-        opacity: 0, y: 20, duration: 0.8, delay: 1.9, ease: "power2.out"
-      })
-
-      // Botón
-      gsap.from(buttonRef.current, {
-        scale: 0, opacity: 0, duration: 0.8, delay: 2.1, ease: "back.out(1.5)"
-      })
-
-      // Efecto 3D mouse
-      if (containerRef.current) {
-        containerRef.current.addEventListener('mousemove', (e) => {
-          const rect = containerRef.current.getBoundingClientRect()
-          const x = (e.clientX - rect.left) / rect.width - 0.5
-          const y = (e.clientY - rect.top) / rect.height - 0.5
-          gsap.to(containerRef.current, {
-            rotationY: x * 5, rotationX: y * 5, duration: 0.5, ease: "power2.out"
-          })
-        })
-        containerRef.current.addEventListener('mouseleave', () => {
-          gsap.to(containerRef.current, {
-            rotationY: 0, rotationX: 0, duration: 0.8, ease: "elastic.out(1, 0.5)"
-          })
-        })
-      }
-    })
-
-    return () => ctx.revert()
-  }, [])
-
-  const handleBookAppointment = () => {
-    const contactSection = document.getElementById('contact')
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
+    gsap.to(".hero-container", {
+      y: -20,
+      scrollTrigger: {
+        trigger: "#hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: 0.8,
+      },
+    });
+  }, { scope: heroRef });
 
   return (
-    <section id="hero">
-      <div className="hero-bg-decoration">
-        <div ref={glowOrb1Ref} className="hero-glow-orb-1"></div>
-        <div ref={glowOrb2Ref} className="hero-glow-orb-2"></div>
-      </div>
+    <section id="hero" ref={heroRef}>
+      {/* Imagen de fondo */}
+      <img src={LugarImg} alt="Background" className="hero-bg" />
 
-      <div ref={containerRef} style={{ position: 'relative', zIndex: 2, maxWidth: '900px', margin: '0 auto', padding: '20px', transformStyle: 'preserve-3d' }}>
-        <div ref={iconRef} style={{ marginBottom: '25px', display: 'inline-block' }}>
-          <GiLipstick size={90} color="#2EC4B6" />
-        </div>
+      {/* Overlay bien aplicado */}
+      <div className="hero-overlay"></div>
 
-        <div ref={badgeRef} className="hero-studio-badge">
-          <FaStar style={{ fontSize: '12px', marginRight: '5px' }} />
-          ✦ STUDIO PREMIUM DE BELLEZA
-          <FaGem style={{ fontSize: '10px', marginLeft: '5px' }} />
-        </div>
-
-        <h1 ref={titleRef} className="hero-title">Karina Nails</h1>
-        <h2 ref={subtitleRef} className="hero-subtitle">& Lashes</h2>
-        <div className="section-divider"></div>
-        <p ref={descriptionRef} className="hero-description">Belleza que eleva tu estilo</p>
-
-        <button ref={buttonRef} className="btn-primary" onClick={handleBookAppointment}>
-          ✨ Agendar Cita ✨
-        </button>
-
-        <div className="hero-scroll-indicator">
-          <div className="scroll-wheel">
-            <div className="scroll-dot"></div>
+      {/* Contenido */}
+      <div className="hero-container">
+        {/* Badge + icono */}
+        <div className="hero-badge-wrapper">
+          <div className="hero-icon-badge">
+            <FaSpa size={34} color="#2EC4B6" />
           </div>
-          <p>Scroll</p>
+
+          <div className="hero-studio-badge">
+            VIVE BRILLANDO POR TI
+          </div>
+        </div>
+
+        {/* Títulos */}
+        <h1 className="hero-title">Kary</h1>
+        <h2 className="hero-subtitle">Glow & Lashes</h2>
+
+        {/* Descripción */}
+        <p className="hero-description">
+          Una experiencia de belleza premium, con acabados impecables
+          y un ambiente diseñado para consentirte.
+        </p>
+
+        {/* Botón */}
+        <div className="hero-actions">
+          <button className="btn-primary">
+            Reservar ahora <FaArrowRight />
+          </button>
+        </div>
+
+        {/* Redes */}
+        <div className="hero-social">
+          <a href="#" className="hero-social-icon instagram">
+            <FaInstagram size={22} />
+          </a>
+
+          <a href="#" className="hero-social-icon whatsapp">
+            <FaWhatsapp size={22} />
+          </a>
         </div>
       </div>
     </section>
-  )
+  );
 }
-
-export default Hero
