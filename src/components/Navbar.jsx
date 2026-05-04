@@ -17,9 +17,10 @@ const Navbar = () => {
     { id: 'hero', label: 'Inicio' },
     { id: 'services', label: 'Servicios' },
     { id: 'about', label: 'Nosotras' },
-    { id: 'opinions', label: 'Opiniones' },
+    { id: 'results', label: 'Resultados' },
     { id: 'gallery', label: 'Galería' },
-    { id: 'contact', label: 'Contacto' }
+    { id: 'contact', label: 'Contacto' },
+    { id: 'opinions', label: 'Opiniones' }
   ]
 
   useEffect(() => {
